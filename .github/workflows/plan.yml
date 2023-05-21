@@ -1,0 +1,85 @@
+name: 'plan'
+
+on:
+  workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+  AWS_REGION : "eu-west-2"
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
+jobs:
+  release-on-push:
+    runs-on: ubuntu-latest
+    environment: prod
+    #env:
+    #  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Install TFSwitch
+        run: |
+          sudo apt install curl
+          curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | sudo -E bash -
+          
+      - name: Setup Terragrunt
+        uses: autero1/action-terragrunt@v1.1.0
+        with:
+          terragrunt_version: latest
+
+      - uses: actions/cache@v3
+        name: Cache plugin dir
+        with:
+          path: ~/.tflint.d/plugins
+          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+
+      - uses: terraform-linters/setup-tflint@v3
+        name: Setup TFLint
+        with:
+          tflint_version: v0.44.1
+
+      - name: Show version
+        run: tflint --version
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::730049440706:role/potteringabout-github-prod
+          role-session-name: ghsession
+          aws-region: ${{ env.AWS_REGION }}
+
+      #- name: Get environment configuration
+      #  run: |
+      #    # echo "${{vars.CONFIG}}" | sed 's/./& /g' > inputs.yml
+      ##    # echo "Trick to echo GitHub Actions Secret:  "
+      #    printf "${{vars.CONFIG}}" > inputs.yml
+
+      - name: Get environment configuration
+        run: |
+          printf "${{vars.CONFIG}}" > inputs.yml
+
+      - name: Find out where we are
+        run: |
+          cat inputs.yml
+
+      - name: Init TFLint
+        run: tflint --init
+        
+      - name: Run TFLint
+        run: tflint -f compact
+
+
+      - name: Run a plan
+        run: |
+          terragrunt run-all plan
+
+
+      
