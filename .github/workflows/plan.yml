@@ -49,7 +49,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::730049440706:role/potteringabout-github-prod
+          role-to-assume: ${{ vars.DEPLOYMENT_ROLE }}
           role-session-name: ghsession
           aws-region: ${{ env.AWS_REGION }}
 

@@ -18,7 +18,7 @@ locals {
   
   state_key = "state/${local.project}/${local.account}/${local.environment}/${local.component}.tfstate"
 
-  deployment_role  = "arn:aws:iam::${local.accountid}:role/${local.project}-${local.account}-deployment"
+  deployment_role  = "arn:aws:iam::${local.accountid}:role/${local.project}-${local.account}-github-deployment"
   
 }
 
