@@ -3,8 +3,6 @@ name: 'plan'
 on:
   workflow_dispatch:
     inputs:
-      version:
-        required: true
       environment:
         type: environment
 
@@ -19,7 +17,7 @@ permissions:
 jobs:
   release-on-push:
     runs-on: ubuntu-latest
-    environment: prod
+    environment: ${{ inputs.environment }}
     #env:
     #  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -36,12 +34,6 @@ jobs:
         uses: autero1/action-terragrunt@v1.1.0
         with:
           terragrunt_version: latest
-
-      - uses: actions/cache@v3
-        name: Cache plugin dir
-        with:
-          path: ~/.tflint.d/plugins
-          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
 
       - uses: terraform-linters/setup-tflint@v3
         name: Setup TFLint
