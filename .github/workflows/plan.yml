@@ -2,10 +2,11 @@ name: 'plan'
 
 on:
   workflow_dispatch:
-    version:
-      required: true
-    environment:
-      type: environment
+    inputs:
+      version:
+        required: true
+      environment:
+        type: environment
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
