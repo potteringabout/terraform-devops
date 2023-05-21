@@ -6,10 +6,6 @@ dependency "component1" {
   config_path = "../component1"
 }
 
-locals {
-  local_inputs = read_terragrunt_config("inputs.hcl", {inputs = {}})
-}
-
 inputs = merge(
   local.local_inputs.inputs,
   {
