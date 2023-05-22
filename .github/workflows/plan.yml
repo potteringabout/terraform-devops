@@ -48,7 +48,7 @@ jobs:
         with:
           repository: github/actions-oidc-debugger
           ref: main
-          token: ${{ secrets.checkout-pat }}
+          token: ${{ secrets.checkoutpat }}
           path: ./.github/actions/actions-oidc-debugger
       - name: Debug OIDC Claims
         uses: ./.github/actions/actions-oidc-debugger
