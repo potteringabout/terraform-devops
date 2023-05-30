@@ -1,6 +1,21 @@
+# Terrform project template
 
 
 
+## Terragrunt
+
+## Repository Structure
+
+* terraform.yml
+
+
+
+## Config vs Code
+
+
+## Shared actions / re-usable workflows
+
+### Dev vs Test/Prod Deployments
 
 
 GitHub Repo id
