@@ -83,6 +83,7 @@ jobs:
         
       - name: Run a plan
         run: |
+          export PATH=~/bin:$PATH
           terragrunt run-all apply --terragrunt-non-interactive
 
 
