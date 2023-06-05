@@ -15,9 +15,9 @@ resource "aws_ssm_parameter" "my_param" {
 }
 
 output "var1" {
-  value = "value1"
+  value = aws_ssm_parameter.my_param.name
 }
-/*
+
 output "tags" {
   value = var.tags
-}*/
+}
