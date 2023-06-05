@@ -77,11 +77,11 @@ jobs:
 
       - name: Get environment configuration
         run: |
-          printf '${{vars.CONFIG}}' > terraform.tfvars.json
+          printf '${{vars.CONFIG}}' > input.tfvars.json
 
       - name: Find out where we are
         run: |
-          cat terraform.tfvars.json
+          cat input.tfvars.json
 
       - name: Init TFLint
         run: tflint --init

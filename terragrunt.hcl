@@ -1,26 +1,19 @@
 locals {
   terraform = yamldecode(file("${get_parent_terragrunt_dir()}/terraform.yml"))
   
-  #file_inputs = try(yamldecode(file("${get_parent_terragrunt_dir()}/inputs.yml")), {})
-  
-  #env_inputs = try(yamldecode(get_env("CONFIG)), {})
+  file_inputs = try(jsondecode(file("${get_parent_terragrunt_dir()}/input.tfvars.json")), {})
   
   #inputs = merge( local.file_inputs, local.env_inputs)
-  #inputs = merge( local.file_inputs )
+  inputs = merge( local.file_inputs )
 
-  #project = local.inputs.tags.project
-  #accountid = local.inputs.accountid
-  #account = local.inputs.tags.account
-  
-  project = inputs.tags.project
-  accountid = inputs.accountid
-  account = inputs.tags.account
+  project = local.inputs.tags.project
+  accountid = local.inputs.accountid
+  account = local.inputs.tags.account
   
   component_path = split("/", path_relative_to_include())
   component = element(local.component_path, length(local.component_path)-1) 
 
   #environment = local.inputs.tags.environment
-  environment = inputs.tags.environment
   
   state_key = "state/${local.project}/${local.account}/${local.environment}/${local.component}.tfstate"
 
@@ -28,12 +21,16 @@ locals {
   
 }
 
-#inputs = local.inputs
+inputs = local.inputs
 
 terraform {
   before_hook "before_hook" {
     commands     = ["apply", "plan"]
     execute      = ["tfswitch", "${local.terraform.version}"]
+  }
+  extra_arguments "disable_input" {
+    commands  = ["${get_terraform_commands_that_need_input()}"]
+    arguments = ["-input=false"]
   }
 }
 
