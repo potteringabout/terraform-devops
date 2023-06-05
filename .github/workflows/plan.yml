@@ -69,27 +69,16 @@ jobs:
           role-session-name: ghsession
           aws-region: ${{ env.AWS_REGION }}
 
-      #- name: Get environment configuration
-      #  run: |
-      #    # echo "${{vars.CONFIG}}" | sed 's/./& /g' > inputs.yml
-      ##    # echo "Trick to echo GitHub Actions Secret:  "
-      #    printf "${{vars.CONFIG}}" > inputs.yml
-
       - name: Get environment configuration
         run: |
           printf '${{vars.CONFIG}}' > input.tfvars.json
-
-      - name: Find out where we are
-        run: |
           cat input.tfvars.json
 
-      - name: Init TFLint
-        run: tflint --init
+      - name: TFLint
+        run: |
+          tflint --init
+          tflint -f compact
         
-      - name: Run TFLint
-        run: tflint -f compact
-
-
       - name: Run a plan
         run: |
           terragrunt run-all plan
