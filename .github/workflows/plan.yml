@@ -81,6 +81,7 @@ jobs:
         
       - name: Run a plan
         run: |
+          terragrunt run-all plan -destroy -out plan
           terragrunt run-all apply --terragrunt-non-interactive
 
 
