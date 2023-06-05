@@ -1,9 +1,9 @@
-include "root2" {
+include "root" {
   path = find_in_parent_folders()
 }
 
-dependency "component1" {
-  config_path = "../component1"
+dependencies "component1" {
+  paths = ["../component1"]
 }
 
 /*

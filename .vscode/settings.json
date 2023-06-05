@@ -2,5 +2,8 @@
     "editor.rulers": [
         80
     ],
-    "ansible.python.interpreterPath": "/usr/local/python/current/bin/python"
+    "ansible.python.interpreterPath": "/usr/local/python/current/bin/python",
+    "github-actions.workflows.pinned.workflows": [
+        ".github/workflows/plan.yml"
+    ]
 }
