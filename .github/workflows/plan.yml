@@ -22,9 +22,9 @@ jobs:
     #  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
 
-      - name: Hello
-        uses: ./.github/actions/hello-world
-        
+      #- name: Hello
+      #  uses: ./.github/actions/hello-world@main
+
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
 
@@ -53,6 +53,7 @@ jobs:
           ref: main
           token: ${{ secrets.checkoutpat }}
           path: ./.github/actions/actions-oidc-debugger
+
       - name: Debug OIDC Claims
         uses: ./.github/actions/actions-oidc-debugger
         with:
@@ -77,6 +78,7 @@ jobs:
       - name: Get environment configuration
         run: |
           printf "${{vars.CONFIG}}" > inputs.yml
+          printf "${{vars.CONFIG}}" > terraform.tfvars.json
 
       - name: Find out where we are
         run: |
