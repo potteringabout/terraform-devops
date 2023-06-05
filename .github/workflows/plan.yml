@@ -77,8 +77,7 @@ jobs:
 
       - name: Get environment configuration
         run: |
-          #printf "${{vars.CONFIG}}" > inputs.yml
-          printf ${{vars.CONFIG}} > terraform.tfvars.json
+          printf '${{vars.CONFIG}}' > terraform.tfvars.json
 
       - name: Find out where we are
         run: |
