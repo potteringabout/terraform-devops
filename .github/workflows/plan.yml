@@ -81,7 +81,7 @@ jobs:
         
       - name: Run a plan
         run: |
-          terragrunt run-all plan
+          terragrunt run-all deploy
 
 
       
