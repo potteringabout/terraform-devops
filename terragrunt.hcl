@@ -13,7 +13,7 @@ locals {
   component_path = split("/", path_relative_to_include())
   component = element(local.component_path, length(local.component_path)-1) 
 
-  #environment = local.inputs.tags.environment
+  environment = local.inputs.tags.environment
   
   state_key = "state/${local.project}/${local.account}/${local.environment}/${local.component}.tfstate"
 
