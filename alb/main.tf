@@ -22,7 +22,7 @@ variable "alb_subnets" {
 }
 
 module "alb" {
-  source          = "git::https://github.com:Allwyn-UK/plat-tfmod-alb.git?ref=v0.0.1"
+  source          = "git::https://github.com/Allwyn-UK/plat-tfmod-alb.git?ref=v0.0.1"
   name            = "${var.tags["project"]}-${var.tags["environment"]}-${var.alb["name"]}"
   vpc_id          = var.vpc_id
   alb_subnets     = var.alb["subnet_ids"] 
