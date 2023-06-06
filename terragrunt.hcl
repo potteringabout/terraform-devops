@@ -25,7 +25,7 @@ inputs = local.inputs
 
 terraform {
   before_hook "before_hook" {
-    commands     = ["apply", "plan"]
+    commands     = ["apply", "plan", "init", "validate", "plan", "destroy"]
     execute      = ["tfswitch", "${local.terraform.version}"]
   }
   extra_arguments "disable_input" {
