@@ -80,6 +80,10 @@ jobs:
         run: |
           tflint --init
           tflint -f compact
+
+      - name: 
+        run: |
+          git config --global url."https://oauth2:${{ env.GITHUB_TOKEN }}@github.com".insteadOf https://github.com
         
       - name: Run a plan
         run: |
