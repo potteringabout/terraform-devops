@@ -17,10 +17,6 @@ variable "alb" {
   })
 }
 
-variable "alb_subnets" {
-  type = list
-}
-
 module "alb" {
   source          = "git::https://github.com/Allwyn-UK/plat-tfmod-alb.git?ref=v0.0.1"
   name            = "${var.tags["project"]}-${var.tags["environment"]}-${var.alb["name"]}"
