@@ -14,7 +14,7 @@ variable "alb" {
   type = object({
     name            = string
     version         = string
-    subnet_ids      = string
+    subnet_ids      = list(string)
   })
 }
 
