@@ -92,8 +92,6 @@ jobs:
           printf "}\n" >> ~/.tflint.hcl
           printf "\n" >> ~/.tflint.hcl
 
-          cat  ~/.tflint.hcl
-
 
       - name: Run TFLint
         run: |
