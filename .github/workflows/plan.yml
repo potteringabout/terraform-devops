@@ -75,19 +75,23 @@ jobs:
       
       - name: Set up TFLint
         run: |
-          printf "rule \"terraform_required_version\" {" > ~/.tflint.hcl
-          printf "  enabled = false" >> ~/.tflint.hcl
+          printf "rule \"terraform_required_version\" {\n" > ~/.tflint.hcl
+          printf "  enabled = false\n" >> ~/.tflint.hcl
           printf "}\n" >> ~/.tflint.hcl
+          printf "\n" >> ~/.tflint.hcl
           
-          printf "rule \"terraform_required_providers\" {" >> ~/.tflint.hcl
-          printf "  enabled = false" >> ~/.tflint.hcl
+          printf "rule \"terraform_required_providers\" {\n" >> ~/.tflint.hcl
+          printf "  enabled = false\n" >> ~/.tflint.hcl
           printf "}\n" >> ~/.tflint.hcl
+          printf "\n" >> ~/.tflint.hcl
           
-          printf "plugin \"aws\" {" >> ~/.tflint.hcl
-          printf "  enabled = true" >> ~/.tflint.hcl
-          printf "  version = \"0.23.1\"" >> ~/.tflint.hcl
-          printf "  source  = \"github.com/terraform-linters/tflint-ruleset-aws\"" >> ~/.tflint.hcl
+          printf "plugin \"aws\" {\n" >> ~/.tflint.hcl
+          printf "  enabled = true\n" >> ~/.tflint.hcl
+          printf "  version = \"0.23.1\"\n" >> ~/.tflint.hcl
+          printf "  source  = \"github.com/terraform-linters/tflint-ruleset-aws\"\n" >> ~/.tflint.hcl
           printf "}\n" >> ~/.tflint.hcl
+          printf "\n" >> ~/.tflint.hcl
+
           cat  ~/.tflint.hcl
 
 
