@@ -8,8 +8,6 @@ variable "tags" {
   })
 }
 
-//variable "var1" {}
-
 output "tags" {
   value = var.tags
 }
