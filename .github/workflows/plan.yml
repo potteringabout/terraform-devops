@@ -45,9 +45,6 @@ jobs:
         with:
           tflint_version: v0.44.1
 
-      - name: Show version
-        run: tflint --version
-
       #- name: Checkout actions-oidc-debugger
       #  uses: actions/checkout@v3
       #  with:
@@ -61,10 +58,10 @@ jobs:
       #  with:
       #    audience: 'https://github.com/github'
 
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: configure aws credentials
+      - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ vars.DEPLOYMENT_ROLE }}
@@ -75,17 +72,34 @@ jobs:
         run: |
           printf '${{vars.CONFIG}}' > input.tfvars.json
           cat input.tfvars.json
+      
+      - name: Set up TFLint
+        run: |
+          printf "rule \"terraform_required_version\" {" > ~/.tflint.hcl
+          printf "  enabled = false" >> ~/.tflint.hcl
+          printf "}" >> ~/.tflint.hcl
+          
+          printf "rule \"terraform_required_providers\" {" >> ~/.tflint.hcl
+          printf "  enabled = false" >> ~/.tflint.hcl
+          printf "}" >> ~/.tflint.hcl
+          
+          printf "plugin \"aws\" {" >> ~/.tflint.hcl
+          printf "  enabled = true" >> ~/.tflint.hcl
+          printf "  version = \"0.23.1\"" >> ~/.tflint.hcl
+          printf "  source  = \"github.com/terraform-linters/tflint-ruleset-aws\"" >> ~/.tflint.hcl
+          printf "}" >> ~/.tflint.hcl
 
-      - name: TFLint
+
+      - name: Run TFLint
         run: |
           tflint --init
-          tflint -f compact
+          tflint --recursive
 
-      - name: 
+      - name: Add PAT to git config
         run: |
           git config --global url."https://oauth2:${{ secrets.checkoutpat }}@github.com".insteadOf https://github.com
         
-      - name: Run a plan
+      - name: Run the plan
         run: |
           export PATH=~/bin:$PATH
           terragrunt run-all plan --terragrunt-non-interactive
