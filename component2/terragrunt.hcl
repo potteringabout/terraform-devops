@@ -9,10 +9,10 @@ dependencies {
 dependency "component1" {
   config_path = "../component1"
 
-  mock_outputs_allowed_terraform_commands = ["validate"]
-  mock_outputs = {
-    var1 = "xxxx"
-  }
+  #mock_outputs_allowed_terraform_commands = ["validate"]
+  #mock_outputs = {
+  #  var1 = "xxxx"
+  #}
 }
 
 /*inputs = merge(
