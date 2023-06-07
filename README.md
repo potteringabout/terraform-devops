@@ -4,14 +4,14 @@ Sample project for deploying AWS infrastructure using Terraform
 
 ## Terragrunt
 
-Terragrunt has various benefits around dependency management, variables 
+Terragrunt has various benefits around dependency management, variables
 managament etc.  We will use it as a terraform wrapper.
 
 ## Repository Structure
 
 ### Components
 
-Code is broken down into `components`.  A component is a container for a 
+Code is broken down into `components`.  A component is a container for a
 discreet piece of functionality.
 __Should we have components for iam and security groups__  
 
@@ -25,7 +25,7 @@ better way to manage this.
 ## Config vs Code
 
 Config will be stored in GitHub environments in yaml.
-We will have the ability to pass in on the command line for deployments to dev.
+We will have the ability to pass in on the command-line for deployments to dev.
 
 eg.  
 
@@ -39,35 +39,33 @@ eg.
 
 ## Shared actions / re-usable workflows
 
-This repository contains local github actions.  These will be centralised/shared
+This repository contains local GitHub actions.  These will be centralised/shared
 going forward.
 
 ### Dev vs Test/Prod Deployments
 
-How do we provide command line access to deploy to dev?
+How do we provide command-line access to deploy to dev?
 
 ## Notes
 
-### Finding the GitHub Repo id
+### Finding the GitHub Repository ID
 
 Can be found with script
 
-```bash
-#!/bin/bash
-OWNER='your github username or organization name'
-REPO_NAME='your repository name'    
-echo $(gh api -H "Accept: application/vnd.github+json" repos/$OWNER/$REPO_NAME) | jq .id
-```
+    #!/bin/bash
+    OWNER='your github username or organization name'
+    REPO_NAME='your repository name'    
+    echo $(gh api -H "Accept: application/vnd.github+json" repos/$OWNER/$REPO_NAME) | jq .id
 
 ### GitHub OIDC subject
 
-The OIDC subject passed to AWS by default contains the repo name and the context.
+The OIDC subject passed to AWS by default contains the repository name and the context.
 That might be
-    
+
     repo: xxxx
     environment: dev01 - the GitHub environment.
 
-We can customise at the repo level or org level what we gets passed in the token.
+We can customise at the repository level or org level what we gets passed in the token.
 
 To see what gets passed...
 
