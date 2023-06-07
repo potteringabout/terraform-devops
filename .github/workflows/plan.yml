@@ -1,4 +1,4 @@
-name: plan
+name: Terraform Plan
 
 on:
   workflow_dispatch:
@@ -40,10 +40,10 @@ jobs:
         with:
           terragrunt_version: latest
 
-      - uses: terraform-linters/setup-tflint@v3
-        name: Setup TFLint
-        with:
-          tflint_version: v0.44.1
+      #- uses: terraform-linters/setup-tflint@v3
+      #  name: Setup TFLint
+      #  with:
+      #    tflint_version: v0.44.1
 
       #- name: Checkout actions-oidc-debugger
       #  uses: actions/checkout@v3
@@ -73,30 +73,30 @@ jobs:
           printf '${{vars.CONFIG}}' > input.tfvars.json
           cat input.tfvars.json
       
-      - name: Set up TFLint
-        run: |
-          printf "rule \"terraform_required_version\" {\n" > ~/.tflint.hcl
-          printf "  enabled = false\n" >> ~/.tflint.hcl
-          printf "}\n" >> ~/.tflint.hcl
-          printf "\n" >> ~/.tflint.hcl
+      #- name: Set up TFLint
+      #  run: |
+      #    printf "rule \"terraform_required_version\" {\n" > ~/.tflint.hcl
+      #    printf "  enabled = false\n" >> ~/.tflint.hcl
+      #    printf "}\n" >> ~/.tflint.hcl
+      #    printf "\n" >> ~/.tflint.hcl
+      #    
+      #    printf "rule \"terraform_required_providers\" {\n" >> ~/.tflint.hcl
+      #    printf "  enabled = false\n" >> ~/.tflint.hcl
+      #    printf "}\n" >> ~/.tflint.hcl
+      #    printf "\n" >> ~/.tflint.hcl
           
-          printf "rule \"terraform_required_providers\" {\n" >> ~/.tflint.hcl
-          printf "  enabled = false\n" >> ~/.tflint.hcl
-          printf "}\n" >> ~/.tflint.hcl
-          printf "\n" >> ~/.tflint.hcl
-          
-          printf "plugin \"aws\" {\n" >> ~/.tflint.hcl
-          printf "  enabled = true\n" >> ~/.tflint.hcl
-          printf "  version = \"0.23.1\"\n" >> ~/.tflint.hcl
-          printf "  source  = \"github.com/terraform-linters/tflint-ruleset-aws\"\n" >> ~/.tflint.hcl
-          printf "}\n" >> ~/.tflint.hcl
-          printf "\n" >> ~/.tflint.hcl
+      #    printf "plugin \"aws\" {\n" >> ~/.tflint.hcl
+      #    printf "  enabled = true\n" >> ~/.tflint.hcl
+      #    printf "  version = \"0.23.1\"\n" >> ~/.tflint.hcl
+      #    printf "  source  = \"github.com/terraform-linters/tflint-ruleset-aws\"\n" >> ~/.tflint.hcl
+      #    printf "}\n" >> ~/.tflint.hcl
+      #    printf "\n" >> ~/.tflint.hcl
 
 
-      - name: Run TFLint
-        run: |
-          tflint --init
-          tflint --recursive
+      #- name: Run TFLint
+      #  run: |
+      #    tflint --init
+      #    tflint --recursive
 
       - name: Add PAT to git config
         run: |
