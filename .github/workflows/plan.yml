@@ -65,7 +65,7 @@ jobs:
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ vars.DEPLOYMENT_ROLE }}
+          role-to-assume: ${{ vars.IDENTITY_ROLE }}
           role-session-name: ghsession
           aws-region: ${{ inputs.region }}
 
@@ -106,7 +106,7 @@ jobs:
       - name: Run the plan
         run: |
           terraform workspace select -or-create=true ${{ inputs.environment }}
-          terraform init -backend-config="bucket=potteringabout-build" -backend-config="key=terraform.state" -backend-config="dynamodb_table=tflocks" -backend-config="workspace_key_prefix=${{ inputs.environment }}" -reconfigure
-          terraform plan
+          terraform init -backend-config="bucket=potteringabout-build" -backend-config="key=terraform.state" -backend-config="dynamodb_table=tflocks" -backend-config="workspace_key_prefix=${{ inputs.environment }}"
+          terraform plan -var-file="input.tfvars.json"
 
       
