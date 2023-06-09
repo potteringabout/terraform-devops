@@ -5,7 +5,7 @@ locals {
   accountid = "680805529666"
   region = "eu-west-2"
 
-  state_key = "state/${local.project}/${local.account}/${local.environment}.tfstate"
+  #state_key = "state/${local.project}/${local.account}/${local.environment}.tfstate"
   deployment_role  = "arn:aws:iam::${local.accountid}:role/${local.project}-${local.account}-github-deployment"
 }
 

@@ -15,6 +15,10 @@ on:
         type: string
         description: AWS Region
         default: "eu-west-2"
+      component:
+        type: string
+        description: Narrow down execution to a single component
+
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
@@ -61,7 +65,7 @@ jobs:
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ vars.DEPLOYMENT_ROLE }}
+          role-to-assume: ${{ secrets.DEPLOYMENT_ROLE }}
           role-session-name: ghsession
           aws-region: ${{ inputs.region }}
 
