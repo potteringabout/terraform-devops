@@ -23,13 +23,21 @@ variable "tags" {
 }
 
 terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
   backend "s3" {
-    #bucket         = "potteringabout-build-${local.project}"
-    #key            = "tfstate"
-    #region         = "eu-west-2"
     encrypt        = true
-    #dynamodb_table = "tflocks"
-    
   }
 }
 
@@ -44,4 +52,8 @@ resource "aws_ssm_parameter" "my_param" {
   name  = "foo2"
   type  = "String"
   value = "bar"
+}
+
+module "test" {
+  source = "./component1"
 }
