@@ -50,4 +50,5 @@ resource "aws_ssm_parameter" "my_param" {
 
 module "test" {
   source = "./component1"
+  tags = var.tags
 }
