@@ -48,7 +48,12 @@ resource "aws_ssm_parameter" "my_param" {
   value = "bar"
 }
 
-module "test" {
+module "component1" {
   source = "./component1"
+  tags = var.tags
+}
+
+module "component2" {
+  source = "./component2"
   tags = var.tags
 }
