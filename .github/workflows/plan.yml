@@ -6,10 +6,19 @@ on:
     inputs:
       environment:
         type: environment
+        description: GitHub Environment
+      tfversion:
+        type: string
+        description: Terrform Version
+        default: "1.4.6"
+      region:
+        type: string
+        description: AWS Region
+        default: "eu-west-2"
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
-  AWS_REGION: "eu-west-2"
+  AWS_REGION: ${{ inputs.region }}
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -19,17 +28,13 @@ jobs:
   terraform-plan:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    #env:
-    #  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-
-      #- name: Hello
-      #  uses: ./.github/actions/hello-world@main
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
+          terraform_version: ${{ inputs.tfversion }}
 
 
       #- uses: terraform-linters/setup-tflint@v3
@@ -58,7 +63,7 @@ jobs:
         with:
           role-to-assume: ${{ vars.DEPLOYMENT_ROLE }}
           role-session-name: ghsession
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ inputs.region }}
 
       - name: Get environment configuration
         run: |
@@ -96,6 +101,8 @@ jobs:
         
       - name: Run the plan
         run: |
-          terraform  plan
+          terraform workspace select -or-create=true ${{ inputs.environment }}
+          terraform init -backend-config="bucket=potteringabout-build" -backend-config="key=terraform.state" -backend-config="dynamodb_table=tflocks" -backend-config="workspace_key_prefix=projectX"
+          terraform plan
 
       
