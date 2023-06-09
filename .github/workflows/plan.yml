@@ -105,7 +105,10 @@ jobs:
         
       - name: Run the plan
         run: |
-          terraform init -backend-config="bucket=potteringabout-build" -backend-config="key=terraform.state" -backend-config="dynamodb_table=tflocks" -backend-config="workspace_key_prefix=${{ inputs.environment }}"
+          terraform init -backend-config="bucket=potteringabout-build" \
+              -backend-config="key=terraform.state" \
+              -backend-config="dynamodb_table=tflocks" \ 
+              -backend-config="workspace_key_prefix=${{ inputs.environment }}"
           terraform workspace select -or-create=true ${{ inputs.environment }}
           terraform plan -var-file="input.tfvars.json"
 
