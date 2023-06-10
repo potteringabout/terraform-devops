@@ -15,7 +15,7 @@ managament etc.  We will use it as a terraform wrapper.
 
 Code is broken down into `components`.  A component is a container for a
 discreet piece of functionality.
-__Should we have components for iam and security groups__  
+__Should we have components for iam and security groups__
 
 ### Terraform version
 
@@ -29,7 +29,7 @@ better way to manage this.
 Config will be stored in GitHub environments in yaml.
 We will have the ability to pass in on the command-line for deployments to dev.
 
-eg.  
+eg.
 
     accountid: 123456789012
     tags:
@@ -56,7 +56,7 @@ Can be found with script
 
     #!/bin/bash
     OWNER='your github username or organization name'
-    REPO_NAME='your repository name'    
+    REPO_NAME='your repository name'
     echo $(gh api -H "Accept: application/vnd.github+json" repos/$OWNER/$REPO_NAME) | jq .id
 
 ### GitHub OIDC subject

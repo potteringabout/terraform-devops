@@ -73,19 +73,19 @@ jobs:
         run: |
           printf '${{vars.CONFIG}}' > input.tfvars.json
           cat input.tfvars.json
-      
+
       #- name: Set up TFLint
       #  run: |
       #    printf "rule \"terraform_required_version\" {\n" > ~/.tflint.hcl
       #    printf "  enabled = false\n" >> ~/.tflint.hcl
       #    printf "}\n" >> ~/.tflint.hcl
       #    printf "\n" >> ~/.tflint.hcl
-      #    
+      #
       #    printf "rule \"terraform_required_providers\" {\n" >> ~/.tflint.hcl
       #    printf "  enabled = false\n" >> ~/.tflint.hcl
       #    printf "}\n" >> ~/.tflint.hcl
       #    printf "\n" >> ~/.tflint.hcl
-          
+
       #    printf "plugin \"aws\" {\n" >> ~/.tflint.hcl
       #    printf "  enabled = true\n" >> ~/.tflint.hcl
       #    printf "  version = \"0.23.1\"\n" >> ~/.tflint.hcl
@@ -102,10 +102,9 @@ jobs:
       - name: Add PAT to git config
         run: |
           git config --global url."https://oauth2:${{ secrets.checkoutpat }}@github.com".insteadOf https://github.com
-        
+
       - name: Run the plan
         run: |
           terraform init -backend-config="bucket=potteringabout-build" -backend-config="key=terraform.state" -backend-config="dynamodb_table=tflocks" -backend-config="workspace_key_prefix=${{ inputs.environment }}"
           terraform workspace select -or-create=true ${{ inputs.environment }}
           terraform plan -var-file="input.tfvars.json"
-
