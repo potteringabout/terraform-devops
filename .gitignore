@@ -1,7 +1,7 @@
 **/.terraform/*
 **/.terraform.lock.hcl
-**/backend.tf 
-**/provider.tf 
+**/backend.tf
+**/provider.tf
 **/inputs.hcl
 **/*debug.tfvars.json
 MYNOTES.md
