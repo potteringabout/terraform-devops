@@ -43,7 +43,7 @@ provider "aws" {
 }
 
 resource "aws_ssm_parameter" "my_param" {
-  #checkov:skip=CKV_AWS_337:The bucket is a public static content host
+  #checkov:skip=CKV_AWS_337:Ensure SSM parameters are using KMS CMK
   name  = "foo2"
   value = "bar"
   type  = "SecureString"
