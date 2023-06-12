@@ -43,9 +43,10 @@ provider "aws" {
 }
 
 resource "aws_ssm_parameter" "my_param" {
+  #checkov:skip=CKV_AWS_337:The bucket is a public static content host
   name  = "foo2"
-  type  = "String"
   value = "bar"
+  type  = "SecureString"
 }
 
 module "component1" {

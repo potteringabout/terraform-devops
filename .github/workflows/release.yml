@@ -1,5 +1,6 @@
 ---
 name: Code Release
+#checkov:skip=CKV2_GHA_1:The bucket is a public static content host
 
 on:
   workflow_dispatch:
