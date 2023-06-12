@@ -20,9 +20,10 @@ variable "tags" {
 }
 
 resource "aws_ssm_parameter" "my_param" {
+  #checkov:skip=CKV_AWS_337:The bucket is a public static content host
   name  = "foo"
-  type  = "String"
   value = "bar"
+  type  = "SecureString"
 }
 
 output "var1" {
