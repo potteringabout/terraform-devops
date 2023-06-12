@@ -1,9 +1,7 @@
 ---
-#checkov:skip=CKV2_GHA_1:The bucket is a public static content host
 name: Lint Code Base
 
 on: [push, pull_request]
-#checkov:skip=CKV2_GHA_1:The bucket is a public static content host
 jobs:
   build:
     name: Lint Code Base
