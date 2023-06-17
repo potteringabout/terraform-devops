@@ -5,6 +5,10 @@ repos:
     - id: check-yaml
     - id: end-of-file-fixer
     - id: trailing-whitespace
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.22 # Get the latest from: https://github.com/gruntwork-io/pre-commit/releases
+    hooks:
+    - id: terraform-fmt
 #-   repo: https://github.com/psf/black
 #    rev: 22.10.0
 #    hooks:
