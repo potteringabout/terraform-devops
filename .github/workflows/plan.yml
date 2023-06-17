@@ -103,8 +103,16 @@ jobs:
         run: |
           git config --global url."https://oauth2:${{ secrets.checkoutpat }}@github.com".insteadOf https://github.com
 
-      - name: Run the plan
+      - name: Terraform Init
         run: |
           terraform init -backend-config="bucket=potteringabout-build" -backend-config="key=terraform.state" -backend-config="dynamodb_table=tflocks" -backend-config="workspace_key_prefix=${{ inputs.environment }}"
           terraform workspace select -or-create=true ${{ inputs.environment }}
+          terraform plan -var-file="input.tfvars.json"
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        run: |
           terraform plan -var-file="input.tfvars.json"
