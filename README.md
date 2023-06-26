@@ -2,12 +2,11 @@
 
 Sample project for deploying AWS infrastructure using Terraform
 
+https://github.com/Allwyn-UK/plat-tf-template.git
+
+
+
 [![GitHub Super-Linter](https://github.com/Allwyn-UK/plat-tf-template/actions/workflows/linter.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
-
-## Terragrunt
-
-Terragrunt has various benefits around dependency management, variables
-managament etc.  We will use it as a terraform wrapper.
 
 ## Repository Structure
 

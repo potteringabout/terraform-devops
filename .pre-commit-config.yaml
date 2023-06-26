@@ -1,15 +1,28 @@
-repos:
+rrepos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: v4.4.0
     hooks:
-    - id: check-yaml
-    - id: end-of-file-fixer
-    - id: trailing-whitespace
+      # Git style
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: no-commit-to-branch
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+        exclude: CHANGELOG.md
+      - id: check-yaml
+      - id: check-executables-have-shebangs
+  - repo: https://github.com/terraform-docs/terraform-docs
+    rev: "v0.16.0"
+    hooks:
+      - id: terraform-docs-go
+        args: ["markdown", "table", "--output-file", "README.md", "./"]
   - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.22 # Get the latest from: https://github.com/gruntwork-io/pre-commit/releases
+    rev: v0.1.22
     hooks:
-    - id: terraform-fmt
-#-   repo: https://github.com/psf/black
-#    rev: 22.10.0
-#    hooks:
-#    -   id: black
+      - id: terraform-fmt
+      - id: tflint
+  - repo: https://github.com/bridgecrewio/checkov.git
+    rev: "2.3.296"
+    hooks:
+      - id: checkov
