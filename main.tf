@@ -7,5 +7,5 @@ module "mod1" {
 module "mod2" {
   source             = "./modules/mod2"
   my_favourite_key   = "colour"
-  my_favourite_value = "red"
+  my_favourite_value = "green"
 }
