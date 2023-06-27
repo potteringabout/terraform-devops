@@ -13,13 +13,13 @@ permissions:
 jobs:
   deploy:
     if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
-    uses: ./.github/workflows/cd-deployment.yml
+    uses: ./.github/workflows/deploy.yml
     strategy:
       fail-fast: false
       matrix:
-        client: ${{ fromJson(vars.clients) }}
+        environment: ${{ fromJson(vars.ENVIRONMENTS) }}
     with:
-      ENVIRONMENT_NAME: ${{ matrix.client }}
+      ENVIRONMENT_NAME: ${{ matrix.environment }}
       AWS_REGION: ${{ vars.AWS_REGION }}
       ROLE_DURATION_SECONDS: 3600
       TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
