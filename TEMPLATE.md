@@ -14,12 +14,22 @@
 |TF_DYNAMO_TABLE|Terraform dynamo table for this account/environment||
 |TF_STATE_BUCKET|Terraform state bucket for this account/environment||
 |CONFIG|A json object all variables required for the environment deployment ( See below )||
+|AWS_REGION|||
+|AWS_ROLE|The role to be assumed in the target account||
+|AWS_REGION|||
 
+
+ENVIRONMENT_NAME: ${{ inputs.ENVIRONMENT_NAME }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          ROLE_DURATION_SECONDS: ${{ inputs.ROLE_DURATION_SECONDS }}
+          ROLE_SESSION_NAME: ${{ inputs.ROLE_SESSION_NAME }}
+          AWS_ROLE: ${{ secrets.AWS_ROLE }}
 
 #### CONFIG object
 
-Variables contained in the CONFIG object will be passed to the terraform execution 
-as a tfvars.json.  The following variables are mandatory
+Variables contained in the CONFIG object will be passed to the terraform execution
+as a tfvars.json ( printf '${{ inputs.CONFIG }}' > ./variables/input.tfvars.json ).  
+The following variables are mandatory
 
     {
       "account": "<account short name>",                            # Eg. dev
