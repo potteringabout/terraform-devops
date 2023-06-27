@@ -1,4 +1,4 @@
-name: "deployment"
+name: "Single Env Deploy"
 on:
   workflow_call:
     inputs:

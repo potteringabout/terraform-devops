@@ -1,4 +1,4 @@
-name: "deploy-multi"
+name: "Multi Env Deploy"
 run-name: Deploy by @${{ github.actor }}
 on:
   push:
