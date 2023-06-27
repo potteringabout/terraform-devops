@@ -18,14 +18,6 @@ on:
         description: "Role session name"
         required: false
         type: string
-      TF_STATE_BUCKET:
-        description: "AWS S3 bucket for Terraform state"
-        required: true
-        type: string
-      TF_DYNAMO_TABLE:
-        description: "AWS DynamoDB table for Terraform lock file"
-        required: true
-        type: string
       TF_VERSION:
         description: "Terraform version"
         required: false
