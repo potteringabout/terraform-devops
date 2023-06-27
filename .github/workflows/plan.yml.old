@@ -1,0 +1,118 @@
+---
+name: Terraform Plan
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        description: GitHub Environment
+      tfversion:
+        type: string
+        description: Terrform Version
+        default: "1.4.6"
+      region:
+        type: string
+        description: AWS Region
+        default: "eu-west-2"
+      component:
+        type: string
+        description: Narrow down execution to a single component
+
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+  AWS_REGION: ${{ inputs.region }}
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+          terraform_version: ${{ inputs.tfversion }}
+
+
+      #- uses: terraform-linters/setup-tflint@v3
+      #  name: Setup TFLint
+      #  with:
+      #    tflint_version: v0.44.1
+
+      #- name: Checkout actions-oidc-debugger
+      #  uses: actions/checkout@v3
+      #  with:
+      #    repository: github/actions-oidc-debugger
+      #    ref: main
+      #    token: ${{ secrets.checkoutpat }}
+      #    path: ./.github/actions/actions-oidc-debugger
+
+      #- name: Debug OIDC Claims
+      #  uses: ./.github/actions/actions-oidc-debugger
+      #  with:
+      #    audience: 'https://github.com/github'
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ vars.IDENTITY_ROLE }}
+          role-session-name: ghsession
+          aws-region: ${{ inputs.region }}
+
+      - name: Get environment configuration
+        run: |
+          printf '${{vars.CONFIG}}' > input.tfvars.json
+          cat input.tfvars.json
+
+      #- name: Set up TFLint
+      #  run: |
+      #    printf "rule \"terraform_required_version\" {\n" > ~/.tflint.hcl
+      #    printf "  enabled = false\n" >> ~/.tflint.hcl
+      #    printf "}\n" >> ~/.tflint.hcl
+      #    printf "\n" >> ~/.tflint.hcl
+      #
+      #    printf "rule \"terraform_required_providers\" {\n" >> ~/.tflint.hcl
+      #    printf "  enabled = false\n" >> ~/.tflint.hcl
+      #    printf "}\n" >> ~/.tflint.hcl
+      #    printf "\n" >> ~/.tflint.hcl
+
+      #    printf "plugin \"aws\" {\n" >> ~/.tflint.hcl
+      #    printf "  enabled = true\n" >> ~/.tflint.hcl
+      #    printf "  version = \"0.23.1\"\n" >> ~/.tflint.hcl
+      #    printf "  source  = \"github.com/terraform-linters/tflint-ruleset-aws\"\n" >> ~/.tflint.hcl
+      #    printf "}\n" >> ~/.tflint.hcl
+      #    printf "\n" >> ~/.tflint.hcl
+
+
+      #- name: Run TFLint
+      #  run: |
+      #    tflint --init
+      #    tflint --recursive
+
+      - name: Add PAT to git config
+        run: |
+          git config --global url."https://oauth2:${{ secrets.checkoutpat }}@github.com".insteadOf https://github.com
+
+      - name: Terraform Init
+        run: |
+          terraform init -backend-config="bucket=potteringabout-build" -backend-config="key=terraform.state" -backend-config="dynamodb_table=tflocks" -backend-config="workspace_key_prefix=${{ inputs.environment }}"
+          terraform workspace select -or-create=true ${{ inputs.environment }}
+          terraform plan -var-file="input.tfvars.json"
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        run: |
+          terraform plan -var-file="input.tfvars.json"
