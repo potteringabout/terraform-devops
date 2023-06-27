@@ -51,7 +51,6 @@ runs:
       id: init
       run: |
         terraform init \
-          -backend-config="backend=s3" \
           -backend-config="region=${{ inputs.AWS_REGION }}" \
           -backend-config="bucket=${{ inputs.TF_STATE_BUCKET }}" \
           -backend-config="key=${{ inputs.ENVIRONMENT_NAME }}/${{ inputs.AWS_REGION }}/terraform.tfstate" \
