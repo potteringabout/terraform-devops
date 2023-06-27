@@ -1,18 +1,18 @@
-variable "my_first_variable" {
+variable "my_favourite_number_key" {
   description = "A descriptive description :)"
-  default     = ""
+  default     = "myfav"
   type        = string
 }
 
-variable "my_second_variable" {
+variable "my_favourite_number_value" {
   description = "A descriptive description :)"
   default     = 1
   type        = number
   validation {
     condition     = contains(
-      var.my_second_variable > 0 &&
-      var.my_second_variable < 10
+      var.my_favourite_number_value > 0 &&
+      var.my_favourite_number_value < 10
     )
-    error_message = "Valid values for my_second_variable are between 0 and 10"
+    error_message = "Valid values for my_favourite_number_value are between 0 and 10"
   }
 }

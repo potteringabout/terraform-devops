@@ -1,5 +1,5 @@
 name: "Multi Env Deploy"
-run-name: Deploy by @${{ github.actor }}
+run-name: Multi Env Deploy by @${{ github.actor }}
 on:
   push:
     branches:

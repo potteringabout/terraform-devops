@@ -1,7 +1,3 @@
-output "first_resource" {
-  value = null_resource.first_resource.id
-}
-
-output "second_resource" {
-  value = null_resource.second_resource.id
+output "favourite_number_id" {
+  value = aws_ssm_parameter.favourite_number.id
 }

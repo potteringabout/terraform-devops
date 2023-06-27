@@ -1,13 +1,11 @@
-resource "null_resource" "first_resource" {
-  name              = var.my_first_variable
+resource "aws_ssm_parameter" "favourite_number" {
+  name        = var.my_favourite_number_key
+  description = "The parameter description"
+  type        = "SecureString"
+  value       = var.my_favourite_number_value
+
   tags = {
-    Name = var.my_first_variable
+    Name = var.my_favourite_number_key
   }
 }
 
-resource "null_resource" "second_resource" {
-  name              = var.my_second_variable
-  tags = {
-    Name = var.my_second_variable
-  }
-}
