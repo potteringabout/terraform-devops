@@ -1,23 +1,8 @@
+// Mandatory vars
 variable "account_role_arn" {
   description = "The ARN of role the AWS provider should assume"
   default     = ""
   type        = string
-}
-
-variable "authorization_rules_for_all_groups" {
-  description = "Provide a map of CIDRS to descriptions that all groups will be authorized to access"
-  default     = {}
-  type        = map(string)
-}
-
-variable "authorization_rules_per_group" {
-  description = "Provide authorization rules that only apply to the specified CIDRs"
-  default     = []
-  type = set(object({
-    description         = string // Free text explanation of the rule
-    group_id            = string // The ID of the group that is to be granted access
-    target_network_cidr = string // The IP range in CIDR notation to allow that group access to
-  }))
 }
 
 variable "aws_region" {
@@ -25,35 +10,70 @@ variable "aws_region" {
   type    = string
 }
 
-variable "ipam_pool_id" {
-  description = "The ID of the IPAM pool to pull address space for the VPN from"
+// Tags - https://allwynuk.atlassian.net/wiki/spaces/DevOps/pages/135758056/Tagging
+variable "account" {
+  description = "Account name abbreviation"
+  default     = "prod"
   type        = string
 }
 
-variable "server_certificate_arn" {
-  description = "The ARN of the certificate in ACM that should be used as the VPN server certificate. If not provided a self signed certificate will be generated."
-  default     = ""
+variable "account_full" {
+  description = "Account name"
+  default     = "Production Account"
   type        = string
 }
 
-variable "vpc_name" {
-  description = "The VPC where the client VPN should land"
-  default     = "euw2-ss-prod"
+variable "costcentre" {
+  description = "The cost centre to charge the asset to"
+  default     = "123" // TODO: Confirm appropriate value
   type        = string
 }
 
-variable "vpn_client_saml_file_path" {
-  description = "The path to the saml document to be used by the VPN client"
+variable "deployment_mode" {
+  description = "How the resource was deployed"
+  default     = "auto"
   type        = string
 }
 
-variable "vpn_subnet_name" {
-  description = "The name tag on the subnet(s) to assosciate the VPN endpoint with"
-  default     = "*access*"
+variable "deployment_repo" {
+  description = "The URL of the deployment repo"
+  default     = "https://github.com/Allwyn-UK/ss-tf-infra"
   type        = string
 }
 
-variable "vpn_self_service_portal_saml_file_path" {
-  description = "The path to the saml document to be used by the VPN self service portal"
+variable "email" {
+  description = "Email contact for the asset owner"
+  default     = "platformengineering@allwyn.co.uk" // TODO: Confirm appropriate value
   type        = string
 }
+
+variable "environment" {
+  description = "Environment name abbreviation in lower case"
+  default     = "prod"
+  type        = string
+}
+
+variable "environment_full" {
+  description = "The environment name in full"
+  default     = "Production environment for shared services"
+  type        = string
+}
+
+variable "owner" {
+  description = "The individual or team owner of the asset"
+  default     = "Platform Engineering" // TODO: Confirm appropriate value
+  type        = string
+}
+
+variable "project" {
+  description = "Project abbreviation in lower case"
+  default     = "ss"
+  type        = string
+}
+
+variable "project_full" {
+  description = "The project name in full"
+  default     = "Shared Services"
+  type        = string
+}
+
