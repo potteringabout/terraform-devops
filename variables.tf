@@ -1,5 +1,5 @@
 // Mandatory vars
-variable "account_role_arn" {
+variable "deployment_role_arn" {
   description = "The ARN of role the AWS provider should assume"
   default     = ""
   type        = string

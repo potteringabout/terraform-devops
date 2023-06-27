@@ -21,9 +21,8 @@ jobs:
     with:
       ENVIRONMENT_NAME: ${{ matrix.environment }}
       AWS_REGION: ${{ vars.AWS_REGION }}
-      ROLE_DURATION_SECONDS: 3600
-      TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
-      TF_DYNAMO_TABLE: ${{ vars.TF_DYNAMO_TABLE }}
       TF_VERSION: ${{ vars.TF_VERSION }}
+      ROLE_DURATION_SECONDS: 3600
+      
     secrets:
-      AWS_ROLE: ${{ secrets.AWS_ROLE }}
+      IDENTITY_ROLE: ${{ secrets.IDENTITY_ROLE }}

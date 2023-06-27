@@ -23,7 +23,7 @@ inputs:
     description: "Terraform version"
     required: false
     default: latest
-  AWS_ROLE:
+  IDENTITY_ROLE:
     description: "Role for Aws"
     required: true
 
@@ -40,7 +40,7 @@ runs:
       uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-region: ${{ inputs.AWS_REGION }}
-        role-to-assume: ${{ inputs.AWS_ROLE }}
+        role-to-assume: ${{ inputs.IDENTITY_ROLE }}
         role-duration-seconds: ${{ inputs.ROLE_DURATION_SECONDS }}
         role-session-name: ${{ inputs.ROLE_SESSION_NAME }}
 

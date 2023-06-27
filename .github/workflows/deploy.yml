@@ -31,7 +31,7 @@ on:
         required: false
         type: string
     secrets:
-      AWS_ROLE:
+      IDENTITY_ROLE:
         required: true
 
 
@@ -40,7 +40,7 @@ permissions:
   contents: read
 jobs:
   plan:
-    name: "cd-plan-${{ inputs.ENVIRONMENT_NAME }}"
+    name: "plan-${{ inputs.ENVIRONMENT_NAME }}"
     environment: ${{ inputs.ENVIRONMENT_NAME }}
     runs-on: ubuntu-latest
 
@@ -64,18 +64,18 @@ jobs:
         uses: ./.github/actions/plan
         with:
           ENVIRONMENT_NAME: ${{ inputs.ENVIRONMENT_NAME }}
-          AWS_REGION: ${{ vars.AWS_REGION }}
           ROLE_DURATION_SECONDS: ${{ inputs.ROLE_DURATION_SECONDS }}
           ROLE_SESSION_NAME: ${{ inputs.ROLE_SESSION_NAME }}
+          TF_VERSION: ${{ inputs.TF_VERSION }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
           TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
           TF_DYNAMO_TABLE: ${{ vars.TF_DYNAMO_TABLE }}
-          TF_VERSION: ${{ vars.TF_VERSION }}
-          AWS_ROLE: ${{ secrets.AWS_ROLE }}
+          IDENTITY_ROLE: ${{ secrets.IDENTITY_ROLE }}
     outputs:
       changes_present: ${{ steps.plandeploy.outputs.PLAN_RESULT }}
 
   apply:
-    name: "cd-apply-${{ inputs.ENVIRONMENT_NAME }}"
+    name: "apply-${{ inputs.ENVIRONMENT_NAME }}"
     environment: ${{ inputs.ENVIRONMENT_NAME }}
     needs: plan
     runs-on: ubuntu-latest
@@ -105,5 +105,5 @@ jobs:
           TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
           TF_DYNAMO_TABLE: ${{ vars.TF_DYNAMO_TABLE }}
           TF_VERSION: ${{ vars.TF_VERSION }}
-          AWS_ROLE: ${{ secrets.AWS_ROLE }}
+          IDENTITY_ROLE: ${{ secrets.IDENTITY_ROLE }}
 
