@@ -1,0 +1,29 @@
+name: "cd-envs"
+run-name: Deploy by @${{ github.actor }}
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+    uses: ./.github/workflows/cd-deployment.yml
+    strategy:
+      fail-fast: false
+      matrix:
+        client: ${{ fromJson(vars.clients) }}
+    with:
+      ENVIRONMENT_NAME: ${{ matrix.client }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      ROLE_DURATION_SECONDS: 3600
+      TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
+      TF_DYNAMO_TABLE: ${{ vars.TF_DYNAMO_TABLE }}
+      TF_VERSION: ${{ vars.TF_VERSION }}
+    secrets:
+      AWS_ROLE: ${{ secrets.AWS_ROLE }}
