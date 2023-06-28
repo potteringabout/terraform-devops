@@ -99,7 +99,7 @@ runs:
         CHECKOV: "${{ steps.checkov.outputs.results }}"
       with:
         script: |
-          const output = '#### Terraform Initialization ${{ steps.init.outcome }} 
+          const output = `#### Terraform Initialization ${{ steps.init.outcome }} 
           #### Terraform Validation ${{ steps.validate.outcome }} 
           #### Terraform Format and Style ${{ steps.fmt.outcome }} 
           #### Terraform Plan ${{ steps.plan.outcome }} 
@@ -118,7 +118,7 @@ runs:
           
           </details>
 
-          *Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}';
+          *Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}`;
 
           github.rest.issues.createComment({
             issue_number: context.issue.number,

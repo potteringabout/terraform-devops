@@ -62,14 +62,12 @@ jobs:
         with:
           #github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `<details><summary>Show Checkov Results</summary>`
+            const output = `<details><summary>Show Checkov Results</summary>
             
-            \`\`\`\n
-            ${process.env.CHECKOV}
-            \`\`\`
+            ${{ env.CHECKOV }}
             </details>
 
-            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+            *Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}`;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
