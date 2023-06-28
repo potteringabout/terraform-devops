@@ -98,7 +98,7 @@ runs:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         CHECKOV: "${{ steps.checkov.outputs.results }}"
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ github.token }}
         script: |
           const output = `#### Terraform Initialization ${{ steps.init.outcome }} 
           #### Terraform Validation ${{ steps.validate.outcome }} 
