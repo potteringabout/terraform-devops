@@ -107,14 +107,14 @@ runs:
 
           <details><summary>Show Plan</summary>
 
-          ${{process.env.PLAN}}
+          ${{ env.PLAN }}
           
 
           </details>
 
           <details><summary>Show Checkov Results</summary>
 
-          ${{process.env.CHECKOV}}
+          ${{ env.CHECKOV }}
           
           </details>
 
