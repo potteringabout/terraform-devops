@@ -79,3 +79,53 @@ runs:
       id: plan
       run: terraform plan -var-file="./variables/input.tfvars.json" -detailed-exitcode -no-color
       shell: bash
+
+    - name: Test with Checkov
+      id: checkov
+      uses: bridgecrewio/checkov-action@master
+      with:
+        directory: .
+        quiet: true # display only failed checks
+        soft_fail: true # Dont fail the build
+        compact: true
+
+    # Add resulting output to PR
+    - name: Update Pull Request
+      uses: actions/github-script@v6
+      if: github.event_name == 'pull_request'
+      env:
+        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        CHECKOV: "${{ steps.checkov.outputs.results }}"
+      with:
+        github-token: ${{ inputs.GITHUB_TOKEN }}
+        script: |
+          const output = `#### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+          #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+          #### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+          #### Checkov Test 🔒\`${{ steps.checkov.outcome }}\`
+
+          <details><summary>Show Plan</summary>
+
+          \`\`\`\n
+          ${process.env.PLAN}
+          \`\`\`
+
+          </details>
+
+          <details><summary>Show Checkov Results</summary>
+
+          \`\`\`\n
+          ${process.env.CHECKOV}
+          \`\`\`
+
+          </details>
+
+          *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
