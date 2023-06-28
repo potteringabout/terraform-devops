@@ -1,20 +1,22 @@
-name: "Multi Env Deploy"
-run-name: Multi Env Deploy by @${{ github.actor }}
+name: "Multi Env Plan"
 on:
   push:
     branches:
-      - "main"
-  workflow_dispatch:
+      - "**"
+      - "!main"
+  pull_request:
+    branches: ["main"]
 
 permissions:
   id-token: write
   contents: read
+  pull-requests: write
 
 jobs:
-  deploy:
-    if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
-    name: deploy
-    uses: ./.github/workflows/deploy.yml
+  plan:
+    name: plan
+    #runs-on: ubuntu-latest
+    uses: ./.github/workflows/plan.yml
     strategy:
       fail-fast: false
       matrix:
@@ -28,3 +30,6 @@ jobs:
       
     secrets:
       IDENTITY_ROLE: ${{ secrets.IDENTITY_ROLE }}
+
+    
+      
