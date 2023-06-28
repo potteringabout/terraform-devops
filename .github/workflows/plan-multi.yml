@@ -8,10 +8,11 @@ on:
     branches: ["main"]
 
 permissions:
-  actions: write
   id-token: write
-  contents: write
-  pull-requests: write
+  actions: read
+  contents: read
+  security-events: write
+  statuses: write
   
 jobs:
   # This workflow contains a single job called "scan"

@@ -29,8 +29,10 @@ on:
 
 permissions:
   id-token: write
-  contents: write
-  actions: write
+  actions: read
+  contents: read
+  security-events: write
+  statuses: write
 jobs:
   plan:
     name: "plan-${{ inputs.ENVIRONMENT_NAME }}"
