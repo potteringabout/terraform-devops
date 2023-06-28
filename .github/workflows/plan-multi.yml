@@ -60,7 +60,7 @@ jobs:
           #PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
           CHECKOV: "${{ steps.checkov.outputs.results }}"
         with:
-          #github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const output = `<details><summary>Show Checkov Results</summary>
             
