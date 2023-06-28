@@ -30,6 +30,7 @@ jobs:
 
       - name: Checkov GitHub Action
         uses: bridgecrewio/checkov-action@v12
+        id: checkov
         with:
           # This will add both a CLI output to the console and create a results.sarif file
           output_format: cli,sarif
@@ -46,6 +47,34 @@ jobs:
         if: success() || failure()
         with:
           sarif_file: results.sarif
+      
+      # Add resulting output to PR
+      - name: Update Pull Request
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          #PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+          CHECKOV: "${{ steps.checkov.outputs.results }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            <details><summary>Show Checkov Results</summary>
+
+            \`\`\`\n
+            ${process.env.CHECKOV}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+            
   plan:
     name: plan
     #runs-on: ubuntu-latest
