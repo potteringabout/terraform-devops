@@ -26,9 +26,6 @@ inputs:
   IDENTITY_ROLE:
     description: "Role for Aws"
     required: true
-  GITHUB_TOKEN:
-    description: "GitHub Token"
-    required: true
 
 
 outputs:
@@ -101,7 +98,6 @@ runs:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         CHECKOV: "${{ steps.checkov.outputs.results }}"
       with:
-        github-token: ${{ inputs.GITHUB_TOKEN }}
         script: |
           const output = `#### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
           #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
