@@ -2,3 +2,4 @@
 **/.terraform.lock.hcl
 **/inputs.hcl
 **/*debug.tfvars.json
+github_conf/*

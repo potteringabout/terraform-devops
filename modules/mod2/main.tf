@@ -3,6 +3,7 @@ resource "aws_ssm_parameter" "favourite" {
   description = "The parameter description"
   type        = "SecureString"
   value       = var.my_favourite_value
+  key_id      = "alias/aws/ssm"
 
   tags = {
     Name = var.my_favourite_key

@@ -13,11 +13,13 @@ permissions:
 jobs:
   deploy:
     if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+    name: deploy
     uses: ./.github/workflows/deploy.yml
     strategy:
       fail-fast: false
       matrix:
         environment: ${{ fromJson(vars.ENVIRONMENTS) }}
+    concurrency: ${{ matrix.environment }}
     with:
       ENVIRONMENT_NAME: ${{ matrix.environment }}
       AWS_REGION: ${{ vars.AWS_REGION }}
