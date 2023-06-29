@@ -11,9 +11,17 @@ permissions:
   contents: read
 
 jobs:
+  release:
+    if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+    name: Tag of main branch
+    uses: ./.github/actions/release
+    with:
+      MESSAGE: "test"
+
   deploy:
     if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
     name: deploy
+    needs: ["release"]
     uses: ./.github/workflows/deploy.yml
     strategy:
       fail-fast: false
