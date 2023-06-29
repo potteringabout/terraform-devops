@@ -1,5 +1,5 @@
-name: "Multi Env Deploy"
-run-name: Multi Env Deploy by @${{ github.actor }}
+name: "Auto Deploy"
+run-name: Auto Deploy triggered by @${{ github.actor }}
 on:
   push:
     branches:

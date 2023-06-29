@@ -19,17 +19,6 @@ def run(command):
   stream = os.popen(command)
   output = stream.read().splitlines()
   return output
-
-print(os.environ)
-
-stdout = run(f"git config --global --add safe.directory /github/workspace")
-print(stdout)
-
-stdout = run(f"ls -l")
-print(stdout)
-
-stdout = run(f"pwd")
-print(stdout)
   
 def get_tags():
   gh_tags = run(list_tags)
@@ -72,13 +61,18 @@ def next_tag(sem_tags, sem_type):
     micro = latest_tag_by_type(sem_tags=sem_tags, major=major, minor=minor) + 1
   return f"{prefix}{major}.{minor}.{micro}"
 
-tag = next_tag(sem_tags=get_tags(), sem_type=sem_update_type)
 
 actor = os.environ['GITHUB_ACTOR']
 message = os.environ['INPUT_MESSAGE']
 
-#git config user.name "${GITHUB_ACTOR}"
-#git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+stdout = run(f"git config --global --add safe.directory /github/workspace")
+print(stdout)
+stdout = run(f"git config user.name {actor}")
+print(stdout)
+stdout = run(f"git config user.email \"{actor}@users.noreply.github.com\"")
+print(stdout)
+
+tag = next_tag(sem_tags=get_tags(), sem_type=sem_update_type)
 
 stdout = run(f"git tag -a {tag} -m \"{message}\"")
 print(stdout)
