@@ -1,4 +1,5 @@
-name: "Multi Env Plan"
+name: "Auto Plan"
+run-name: Auto Plan triggered by @${{ github.actor }}
 on:
   push:
     branches:
