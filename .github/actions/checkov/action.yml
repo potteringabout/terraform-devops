@@ -1,15 +1,12 @@
 name: Checkov
 description: Executes Checkov Security Scan
-inputs:
-  GITHUB_TOKEN:
-    description: "GITHUB_TOKEN"
-    required: true
+
 
 runs:
   using: "composite"
   steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so follow-up steps can access it
-    - uses: actions/checkout@v3
+    #- uses: actions/checkout@v3
 
     - name: Checkov GitHub Action
       uses: bridgecrewio/checkov-action@v12
@@ -29,3 +26,29 @@ runs:
       if: success() || failure()
       with:
         sarif_file: results.sarif
+
+    # Add resulting output to PR
+    - name: Update Pull Request
+      uses: actions/github-script@v6
+      if: github.event_name == 'pull_request'
+      env:
+        CHECKOV: "${{ steps.checkov.outputs.results }}"
+      with:
+        github-token: ${{ github.token }}
+        script: |
+          const output = `#### Checkov Test ${{ steps.checkov.outcome }} 
+
+          <details><summary>Checkov Results</summary>
+
+          ${{ env.CHECKOV }}
+        
+          </details>
+        
+          *Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}`;
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
