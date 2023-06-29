@@ -20,6 +20,9 @@ def run(command):
   output = stream.read().splitlines()
   return output
 
+stdout = run(f"git config --global --add safe.directory /github/workspace")
+print(stdout)
+
 stdout = run(f"ls -l")
 print(stdout)
 
