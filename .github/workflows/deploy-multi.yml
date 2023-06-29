@@ -21,7 +21,7 @@ jobs:
       - name: Tag of main branch
         uses: ./.github/actions/release
         with:
-          MESSAGE: "test"
+          MESSAGE: 'PR #${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}'
 
   deploy:
     name: deploy

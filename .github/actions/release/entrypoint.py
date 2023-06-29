@@ -19,6 +19,12 @@ def run(command):
   stream = os.popen(command)
   output = stream.read().splitlines()
   return output
+
+stdout = run(f"ls -l")
+print(stdout)
+
+stdout = run(f"pwd")
+print(stdout)
   
 def get_tags():
   gh_tags = run(list_tags)
