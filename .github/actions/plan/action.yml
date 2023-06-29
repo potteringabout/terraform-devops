@@ -81,22 +81,12 @@ runs:
       run: terraform plan -var-file="./variables/input.tfvars.json" -detailed-exitcode -no-color
       shell: bash
 
-    - name: Test with Checkov
-      id: checkov
-      uses: bridgecrewio/checkov-action@master
-      with:
-        directory: .
-        quiet: true # display only failed checks
-        soft_fail: true # Dont fail the build
-        compact: true
-
     # Add resulting output to PR
     - name: Update Pull Request
       uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
       env:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-        CHECKOV: "${{ steps.checkov.outputs.results }}"
       with:
         github-token: ${{ github.token }}
         script: |
@@ -104,19 +94,12 @@ runs:
           #### Terraform Validation ${{ steps.validate.outcome }} 
           #### Terraform Format and Style ${{ steps.fmt.outcome }} 
           #### Terraform Plan ${{ steps.plan.outcome }} 
-          #### Checkov Test ${{ steps.checkov.outcome }} 
-
-          <details><summary>Show Plan</summary>
+          
+          <details><summary>Plan</summary>
 
           ${{ env.PLAN }}
           
 
-          </details>
-
-          <details><summary>Show Checkov Results</summary>
-
-          ${{ env.CHECKOV }}
-          
           </details>
 
           *Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}`;
