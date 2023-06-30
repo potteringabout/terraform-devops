@@ -26,6 +26,7 @@ on:
     #  IDENTITY_ROLE:
     #    required: true
   workflow_dispatch:
+    #checkov:skip=CKV_GHA_7:Deliberately added input parameters for specfic deployments
     inputs:
       ENVIRONMENT_NAME:
         description: "Environment where terraform workflows will be deployed to"
