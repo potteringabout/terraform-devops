@@ -1,4 +1,4 @@
-name: "Single Env Plan"
+name: "Plan"
 on:
   workflow_call:
     inputs:

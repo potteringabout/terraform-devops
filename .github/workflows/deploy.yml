@@ -1,4 +1,4 @@
-name: "Single Env Deploy"
+name: "Deploy"
 on:
   workflow_call:
     inputs:
@@ -98,4 +98,3 @@ jobs:
           TF_DYNAMO_TABLE: ${{ vars.TF_DYNAMO_TABLE }}
           TF_VERSION: ${{ vars.TF_VERSION }}
           IDENTITY_ROLE: ${{ secrets.IDENTITY_ROLE }}
-

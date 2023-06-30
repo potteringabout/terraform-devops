@@ -1,22 +1,21 @@
-rrepos:
+repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
-      # Git style
       - id: check-added-large-files
       - id: check-merge-conflict
-      - id: no-commit-to-branch
+      #- id: no-commit-to-branch
       - id: end-of-file-fixer
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
         exclude: CHANGELOG.md
       - id: check-yaml
       - id: check-executables-have-shebangs
-  - repo: https://github.com/terraform-docs/terraform-docs
-    rev: "v0.16.0"
-    hooks:
-      - id: terraform-docs-go
-        args: ["markdown", "table", "--output-file", "README.md", "./"]
+  #- repo: https://github.com/terraform-docs/terraform-docs
+  #  rev: "v0.16.0"
+  #  hooks:
+  #    - id: terraform-docs-go
+  #      args: ["markdown", "table", "--output-file", "README.md", "./"]
   - repo: https://github.com/gruntwork-io/pre-commit
     rev: v0.1.22
     hooks:
