@@ -77,3 +77,15 @@ variable "project_full" {
   type        = string
 }
 
+// Application Variables
+variable "colour" {
+  description = "The name of your favourite colour"
+  default     = "blue"
+  type        = string
+}
+
+variable "food" {
+  description = "The name of your favourite food"
+  default     = "pizza"
+  type        = string
+}

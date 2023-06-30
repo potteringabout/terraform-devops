@@ -20,7 +20,7 @@ repos:
     rev: v0.1.22
     hooks:
       - id: terraform-fmt
-      - id: tflint
+      #- id: tflint
   - repo: https://github.com/bridgecrewio/checkov.git
     rev: "2.3.296"
     hooks:

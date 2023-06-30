@@ -1,3 +1,5 @@
+# Terraform Repository Template
+
 ## Variables
 
 ### Repository level variables
@@ -14,13 +16,11 @@
 |TF_DYNAMO_TABLE|Terraform dynamo table for this account/environment||
 |TF_STATE_BUCKET|Terraform state bucket for this account/environment||
 |CONFIG|A json object all variables required for the environment deployment ( See below )||
-|AWS_REGION|||
+|AWS_REGION| | |
 |IDENTITY_ROLE|The role to be assumed in the identity account|dfe-dev-github|
-|AWS_REGION|||
 ENVIRONMENT_NAME: ${{ inputs.ENVIRONMENT_NAME }}
 ROLE_DURATION_SECONDS: ${{ inputs.ROLE_DURATION_SECONDS }}
 ROLE_SESSION_NAME: ${{ inputs.ROLE_SESSION_NAME }}
-
 
 #### CONFIG object
 
@@ -58,6 +58,3 @@ The following variables are mandatory
 
 
 ## CodeSpaces
-
-
-
