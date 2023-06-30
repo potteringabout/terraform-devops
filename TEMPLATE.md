@@ -1,3 +1,5 @@
+# Terraform Repository Template
+
 ## Variables
 
 ### Repository level variables
@@ -20,7 +22,6 @@
 ENVIRONMENT_NAME: ${{ inputs.ENVIRONMENT_NAME }}
 ROLE_DURATION_SECONDS: ${{ inputs.ROLE_DURATION_SECONDS }}
 ROLE_SESSION_NAME: ${{ inputs.ROLE_SESSION_NAME }}
-
 
 #### CONFIG object
 
@@ -58,6 +59,3 @@ The following variables are mandatory
 
 
 ## CodeSpaces
-
-
-
