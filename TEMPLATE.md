@@ -5,7 +5,7 @@
 |Name|Description|Example|
 |---|---|---|
 |ENVIRONMENTS|Array of environment names.  These should match the environments defined in GitHub Environments|["dev01","test01","test02","prod01"]|
-|TF_VERSION|Version of terraform used for the deployment|1.4.6|
+|TF_VERSION|Version of terraform used for the deployment|1.5.2|
 
 ### Environment level variables
 
