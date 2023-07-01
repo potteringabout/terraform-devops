@@ -84,6 +84,6 @@ jobs:
           AWS_REGION: ${{ vars.AWS_REGION }}
           TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
           TF_DYNAMO_TABLE: ${{ vars.TF_DYNAMO_TABLE }}
-          IDENTITY_ROLE: "${{ vars.IDENTITY_ROLE }}"
+          IDENTITY_ROLE: "${{ secret.IDENTITY_ROLE }}"
     outputs:
       changes_present: ${{ steps.plandeploy.outputs.PLAN_RESULT }}
