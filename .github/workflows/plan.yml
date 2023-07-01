@@ -24,9 +24,9 @@ on:
     #    description: "Terraform version"
     #    required: false
     #    type: string
-    secrets:
-      IDENTITY_ROLE:
-        required: true
+    #secrets:
+    #  IDENTITY_ROLE:
+    #    required: true
 
   workflow_dispatch:
     #checkov:skip=CKV_GHA_7:Deliberately added input parameters for specfic deployments
@@ -84,6 +84,6 @@ jobs:
           AWS_REGION: ${{ vars.AWS_REGION }}
           TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
           TF_DYNAMO_TABLE: ${{ vars.TF_DYNAMO_TABLE }}
-          IDENTITY_ROLE: ${{ secrets.IDENTITY_ROLE }}
+          IDENTITY_ROLE: "${{ secrets.IDENTITY_ROLE }}"
     outputs:
       changes_present: ${{ steps.plandeploy.outputs.PLAN_RESULT }}
