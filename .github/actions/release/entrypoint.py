@@ -14,12 +14,12 @@ def semantic_version(version):
   sv = semver_patern.match(version)
   if sv:
     return [sv.group(1), sv.group(2), sv.group(3)]
-  
+
 def run(command):
   stream = os.popen(command)
   output = stream.read().splitlines()
   return output
-  
+
 def get_tags():
   gh_tags = run(list_tags)
   tags = []
@@ -27,6 +27,7 @@ def get_tags():
     semantic = semantic_version(tag)
     if semantic:
       tags.append(semantic)
+  print(f"Semantic tags found {tags}")
   return tags
 
 def latest_tag_by_type(sem_tags, major=None, minor=None):
@@ -41,7 +42,7 @@ def latest_tag_by_type(sem_tags, major=None, minor=None):
     else:
       if major == int(tag[sem_types["major"]]) and minor == int(tag[sem_types["minor"]]):
         versions.append(int(tag[sem_types["micro"]]))
-        
+
   return max(versions)
 
 def next_tag(sem_tags, sem_type):
