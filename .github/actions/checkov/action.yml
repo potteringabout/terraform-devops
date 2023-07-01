@@ -9,6 +9,7 @@ runs:
     #- uses: actions/checkout@v3
 
     - name: Checkov GitHub Action
+      id: checkov
       uses: bridgecrewio/checkov-action@v12
       with:
         # This will add both a CLI output to the console and create a results.sarif file
@@ -36,14 +37,14 @@ runs:
       with:
         github-token: ${{ github.token }}
         script: |
-          const output = `#### Checkov Test ${{ steps.checkov.outcome }} 
+          const output = `#### Checkov Test ${{ steps.checkov.outcome }}
 
           <details><summary>Checkov Results</summary>
 
           ${{ env.CHECKOV }}
-        
+
           </details>
-        
+
           *Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}`;
 
           github.rest.issues.createComment({
