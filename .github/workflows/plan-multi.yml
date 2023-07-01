@@ -14,6 +14,7 @@ permissions:
   issues: write
   pull-requests: write
   security-events: write
+  deployments: write
 jobs:
   # This workflow contains a single job called "scan"
   scan:
