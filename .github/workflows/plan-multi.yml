@@ -31,11 +31,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so follow-up steps can access it
       - uses: actions/checkout@v3
 
-      # Run checkov 
+      # Run checkov
       - name: checkov scan
         uses: ./.github/actions/checkov
-        
-            
+
+
   plan:
     name: plan
     needs: ["scan"]
@@ -47,12 +47,9 @@ jobs:
     concurrency: ${{ matrix.environment }}
     with:
       ENVIRONMENT_NAME: ${{ matrix.environment }}
-      AWS_REGION: ${{ vars.AWS_REGION }}
-      TF_VERSION: ${{ vars.TF_VERSION }}
+      #AWS_REGION: ${{ vars.AWS_REGION }}
+      #TF_VERSION: ${{ vars.TF_VERSION }}
       ROLE_DURATION_SECONDS: 3600
-      
-    secrets:
-      IDENTITY_ROLE: ${{ secrets.IDENTITY_ROLE }}
 
-    
-      
+    #secrets:
+    #  IDENTITY_ROLE: ${{ secrets.IDENTITY_ROLE }}
