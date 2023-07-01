@@ -80,6 +80,8 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            await sleep(5000);
+
             const deployments = await github.rest.repos.listDeployments({
               owner: context.repo.owner,
               repo: context.repo.repo,
