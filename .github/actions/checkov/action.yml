@@ -12,28 +12,30 @@ runs:
       id: checkov
       uses: bridgecrewio/checkov-action@v12
       with:
+        framework: terraform
         # This will add both a CLI output to the console and create a results.sarif file
-        output_format: cli,sarif
-        output_file_path: console,results.sarif
+        output_format: cli
+        #output_file_path: console,results.sarif
 
-    - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v2
+    #- name: Checkov GitHub Action
+    #  id: checkov
+    #  uses: bridgecrewio/checkov-action@v12
+    #  with:
+    #    # This will add both a CLI output to the console and create a results.sarif file
+    #    output_format: cli,sarif
+    #    output_file_path: console,results.sarif
 
-      # Results are generated only on a success or failure
-      # this is required since GitHub by default won't run the next step
-      # when the previous one has failed. Security checks that do not pass will 'fail'.
-      # An alternative is to add `continue-on-error: true` to the previous step
-      # Or 'soft_fail: true' to checkov.
-      if: success() || failure()
-      with:
-        sarif_file: results.sarif
+    #- name: Upload SARIF file
+    #  uses: github/codeql-action/upload-sarif@v2
+    #  continue-on-error: true
+
 
     # Add resulting output to PR
     - name: Update Pull Request
       uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
-      env:
-        CHECKOV: "${{ steps.checkov.outputs.results }}"
+      #env:
+      #  CHECKOV: "${{ steps.checkov.outputs.results }}"
       with:
         github-token: ${{ github.token }}
         script: |
@@ -41,7 +43,7 @@ runs:
 
           <details><summary>Checkov Results</summary>
 
-          ${{ env.CHECKOV }}
+          ${{ steps.checkov.outputs.results }}
 
           </details>
 
