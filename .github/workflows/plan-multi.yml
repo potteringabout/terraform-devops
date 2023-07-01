@@ -1,5 +1,5 @@
 name: "Auto Plan"
-run-name: Auto Plan triggered by @${{ github.actor }}
+run-name: Auto Plan triggered by @${{ github.actor }} - ${{ github.event_name }}
 on:
   push:
     branches:
