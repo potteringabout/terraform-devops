@@ -6,8 +6,8 @@ import re
 sem_types = {"major":0, "minor":1, "micro":2 }
 sem_update_type = "micro" # micro, minor or major
 prefix = "v"
-list_tags = "git ls-remote"
-semver_regex = ".*/" + prefix + "(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$"
+list_tags = "git tag -l"
+semver_regex = "^" + prefix + "(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$"
 semver_patern = re.compile(semver_regex)
 
 def semantic_version(version):
@@ -63,7 +63,7 @@ def next_tag(sem_tags, sem_type):
   return f"{prefix}{major}.{minor}.{micro}"
 
 
-'''actor = os.environ['GITHUB_ACTOR']
+actor = os.environ['GITHUB_ACTOR']
 message = os.environ['INPUT_MESSAGE']
 
 stdout = run(f"git config --global --add safe.directory /github/workspace")
@@ -72,10 +72,10 @@ stdout = run(f"git config user.name {actor}")
 print(stdout)
 stdout = run(f"git config user.email \"{actor}@users.noreply.github.com\"")
 print(stdout)
-'''
+
 tag = next_tag(sem_tags=get_tags(), sem_type=sem_update_type)
 
-#stdout = run(f"git tag -a {tag} -m \"{message}\"")
-#print(stdout)
+stdout = run(f"git tag -a {tag} -m \"{message}\"")
+print(stdout)
 stdout = run(f"git push origin {tag}")
 print(stdout)
