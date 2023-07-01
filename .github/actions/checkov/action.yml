@@ -32,8 +32,8 @@ runs:
     - name: Update Pull Request
       uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
-      env:
-        CHECKOV: "${{ steps.checkov.outputs.results }}"
+      #env:
+      #  CHECKOV: "${{ steps.checkov.outputs.results }}"
       with:
         github-token: ${{ github.token }}
         script: |
@@ -41,7 +41,7 @@ runs:
 
           <details><summary>Checkov Results</summary>
 
-          ${{ env.CHECKOV }}
+          ${{ steps.checkov.outputs.results }}
 
           </details>
 
