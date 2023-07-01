@@ -23,9 +23,9 @@ on:
       #  description: "Terraform version"
       #  required: false
       #  type: string
-    #secrets:
-    #  IDENTITY_ROLE:
-    #    required: true
+    secrets:
+      IDENTITY_ROLE:
+        required: true
   workflow_dispatch:
     #checkov:skip=CKV_GHA_7:Deliberately added input parameters for specfic deployments
     inputs:
