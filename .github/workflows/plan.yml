@@ -6,10 +6,6 @@ on:
         description: "Environment for terraform plan"
         required: true
         type: string
-      #AWS_REGION:
-      #  description: "AWS region"
-      #  required: true
-      #  type: string
       ROLE_DURATION_SECONDS:
         description: "Role duration"
         required: false
@@ -20,13 +16,6 @@ on:
         required: false
         type: string
         default: ghauto
-    #  TF_VERSION:
-    #    description: "Terraform version"
-    #    required: false
-    #    type: string
-    #secrets:
-    #  IDENTITY_ROLE:
-    #    required: true
 
   workflow_dispatch:
     #checkov:skip=CKV_GHA_7:Deliberately added input parameters for specfic deployments
