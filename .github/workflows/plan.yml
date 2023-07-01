@@ -41,9 +41,10 @@ permissions:
   contents: read
   issues: write
   pull-requests: write
-  deployments: write
 jobs:
   plan:
+    permissions:
+      deployments: write
     name: "plan-${{ inputs.ENVIRONMENT_NAME }}"
     environment: ${{ inputs.ENVIRONMENT_NAME }}
     runs-on: ubuntu-latest
