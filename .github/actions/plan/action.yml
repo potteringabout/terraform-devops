@@ -23,6 +23,7 @@ inputs:
     description: "Terraform version"
     required: false
     default: latest
+secrets:
   IDENTITY_ROLE:
     description: "Role for Aws"
     required: true
@@ -90,15 +91,15 @@ runs:
       with:
         github-token: ${{ github.token }}
         script: |
-          const output = `#### Terraform Initialization ${{ steps.init.outcome }} 
-          #### Terraform Validation ${{ steps.validate.outcome }} 
-          #### Terraform Format and Style ${{ steps.fmt.outcome }} 
-          #### Terraform Plan ${{ steps.plan.outcome }} 
-          
+          const output = `#### Terraform Initialization ${{ steps.init.outcome }}
+          #### Terraform Validation ${{ steps.validate.outcome }}
+          #### Terraform Format and Style ${{ steps.fmt.outcome }}
+          #### Terraform Plan ${{ steps.plan.outcome }}
+
           <details><summary>Plan</summary>
 
           ${{ env.PLAN }}
-          
+
 
           </details>
 
