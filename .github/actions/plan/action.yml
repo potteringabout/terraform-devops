@@ -23,7 +23,6 @@ inputs:
     description: "Terraform version"
     required: false
     default: latest
-secrets:
   IDENTITY_ROLE:
     description: "Role for Aws"
     required: true
