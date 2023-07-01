@@ -8,34 +8,31 @@ runs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so follow-up steps can access it
     #- uses: actions/checkout@v3
 
+    # Add resulting output to PR
     - name: Checkov GitHub Action
-      id: checkov
       uses: bridgecrewio/checkov-action@v12
       with:
         framework: terraform
-        # This will add both a CLI output to the console and create a results.sarif file
+        output_format: sarif
+        output_file_path: results.sarif
+
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v2
+      if: success() || failure()
+      with:
+        sarif_file: results.sarif
+
+    - name: Checkov GitHub Action on PR
+      id: checkov
+      if: github.event_name == 'pull_request'
+      uses: bridgecrewio/checkov-action@v12
+      with:
+        framework: terraform
         output_format: cli
-        #output_file_path: console,results.sarif
 
-    #- name: Checkov GitHub Action
-    #  id: checkov
-    #  uses: bridgecrewio/checkov-action@v12
-    #  with:
-    #    # This will add both a CLI output to the console and create a results.sarif file
-    #    output_format: cli,sarif
-    #    output_file_path: console,results.sarif
-
-    #- name: Upload SARIF file
-    #  uses: github/codeql-action/upload-sarif@v2
-    #  continue-on-error: true
-
-
-    # Add resulting output to PR
     - name: Update Pull Request
       uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
-      #env:
-      #  CHECKOV: "${{ steps.checkov.outputs.results }}"
       with:
         github-token: ${{ github.token }}
         script: |
