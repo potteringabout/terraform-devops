@@ -63,6 +63,7 @@ jobs:
         with:
           CONFIG: ${{ vars.CONFIG }}
 
+
       - name: Plan deployment to ${{ inputs.ENVIRONMENT_NAME }}
         id: plan
         uses: ./.github/actions/plan
