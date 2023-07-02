@@ -71,12 +71,13 @@ jobs:
           TF_DYNAMO_TABLE: ${{ vars.TF_DYNAMO_TABLE }}
           IDENTITY_ROLE: ${{ secrets.IDENTITY_ROLE }}
     outputs:
-      changes_present: ${{ steps.plandeploy.outputs.PLAN_RESULT }}
+      changes_present: ${{ steps.plan.outputs.PLAN_RESULT }}
 
   apply:
     name: "apply-${{ inputs.ENVIRONMENT_NAME }}"
     environment: ${{ inputs.ENVIRONMENT_NAME }}
     needs: plan
+    if: needs.plan.outputs.changes_present == 2
     runs-on: ubuntu-latest
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
