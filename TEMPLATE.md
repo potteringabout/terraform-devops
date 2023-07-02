@@ -1,5 +1,25 @@
 # Terraform Repository Template
 
+## CodeSpaces
+
+## Structure
+
+## Actions
+
+### Push to branch
+
+### PR to main
+
+### Push to main
+
+#### Adhoc actions
+
+#### Plan
+
+#### Deploy
+
+#### Checkov
+
 ## Variables
 
 ### Repository level variables
@@ -16,11 +36,11 @@
 |TF_DYNAMO_TABLE|Terraform dynamo table for this account/environment||
 |TF_STATE_BUCKET|Terraform state bucket for this account/environment||
 |CONFIG|A json object all variables required for the environment deployment ( See below )||
-|AWS_REGION| | |
+
+### Environment level secrets
+|Name|Description|Example|
+|---|---|---|
 |IDENTITY_ROLE|The role to be assumed in the identity account|dfe-dev-github|
-ENVIRONMENT_NAME: ${{ inputs.ENVIRONMENT_NAME }}
-ROLE_DURATION_SECONDS: ${{ inputs.ROLE_DURATION_SECONDS }}
-ROLE_SESSION_NAME: ${{ inputs.ROLE_SESSION_NAME }}
 
 #### CONFIG object
 
@@ -45,16 +65,80 @@ The following variables are mandatory
 
 
 
-
-
-
-
-
-
-## CODEOWNERS
-
-
 ## Pre-Commit Hooks
 
 
-## CodeSpaces
+## Security
+
+### Main branch
+
+* Branch protection on main
+* Require PR with approval before merging
+* Require signed commits
+* Require status checks to pass before merging.
+* Require deployments to succeed before merging ?? Which envs ??
+* Push to main generates a semantic tag
+* Tag protection rules ( Eg v* ).
+
+### Deployments
+
+* Only allow deployments from protected branches ( Even for dev? )
+* Deployment protection roles for environments ( Only for prod and prelive? )
+
+### CODEOWNERS
+
+
+#### OIDC
+
+IAM trust for dev and test locked down to repo??
+
+    "StringLike": {
+      "token.actions.githubusercontent.com:sub": "repo:potteringabout/terraform-devops:*"
+    }
+
+Trust for prod locked down to tags??
+
+    "StringLike": {
+      "token.actions.githubusercontent.com:sub": "repo:potteringabout/terraform-devops:environment:prod*:ref:refs/tags/v*:ref_type:tag"
+    }
+
+## Notes
+
+### Finding the GitHub Repository ID
+
+Can be found with script
+
+    #!/bin/bash
+    gh auth login
+    OWNER='your github username or organization name'
+    REPO_NAME='your repository name'
+    echo $(gh api -H "Accept: application/vnd.github+json" repos/$OWNER/$REPO_NAME) | jq .id
+
+### GitHub OIDC subject
+
+The OIDC subject passed to AWS by default contains the repository name and the context.
+That might be
+
+    repo: xxxx
+    environment: dev01 - the GitHub environment.
+
+We can customise at the repository level or org level what we gets passed in the token.
+
+To see what gets passed...
+
+    curl -L \
+      -X GET \
+      -H "Accept: application/vnd.github+json" \
+      -H "Authorization: Bearer <YOUR-TOKEN>"\
+      -H "X-GitHub-Api-Version: 2022-11-28" \
+      https://api.github.com/repos/<org>/<repo>/actions/oidc/customization/sub
+
+We need to use curl ( or something similar ) to update the subject.
+
+    curl -L \
+      -X PUT \
+      -H "Accept: application/vnd.github+json" \
+      -H "Authorization: Bearer <YOUR-TOKEN>"\
+      -H "X-GitHub-Api-Version: 2022-11-28" \
+      https://api.github.com/repos/<org>/<repo>/actions/oidc/customization/sub \
+      -d '{"use_default":false,"include_claim_keys":["repo","context", "repository_visibility", "ref", "ref_type" ]}'
