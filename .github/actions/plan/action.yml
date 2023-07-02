@@ -27,7 +27,6 @@ inputs:
     description: "Role for Aws"
     required: true
 
-
 outputs:
   PLAN_RESULT:
     description: "Result code of the plan step"
@@ -79,6 +78,12 @@ runs:
     - name: Terraform Plan
       id: plan
       run: terraform plan -var-file="./variables/input.tfvars.json" -detailed-exitcode -no-color
+      shell: bash
+      continue-on-error: true
+
+    - name: Check for Terraform Plan Failure
+      if: steps.plan.outputs.exitcode == 1
+      run: exit 1
       shell: bash
 
     # Add resulting output to PR
