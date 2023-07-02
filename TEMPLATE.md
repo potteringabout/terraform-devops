@@ -83,7 +83,8 @@ The following variables are mandatory
 ### Deployments
 
 * Only allow deployments from protected branches ( Even for dev? )
-* Deployment protection roles for environments ( Only for prod and prelive? )
+* Only allow deployments from tags ( Eg. v* )
+* Deployment protection rules for environments ( Only for prod and prelive? )
 
 ### CODEOWNERS
 
