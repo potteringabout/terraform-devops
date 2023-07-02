@@ -2,6 +2,16 @@
 
 ## CodeSpaces
 
+- python:  3.11.4
+- docker:  24.0.2
+- gh:  2.31.0
+- terraform:  1.5.2
+- tflint:  0.47.0
+- checkov:  2.3.309
+- boto3:  1.26.160
+- ssm-tools:  1.6.0
+- tfswitch:  0.13.1308
+
 ## Structure
 
 ## Actions
