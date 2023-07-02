@@ -3,7 +3,7 @@ on:
   workflow_call:
     inputs:
       ENVIRONMENT_NAME:
-        description: "Environment for terraform plan"
+        description: "Environment Name"
         required: true
         type: string
       ROLE_DURATION_SECONDS:

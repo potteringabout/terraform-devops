@@ -37,7 +37,6 @@ variable "deployment_mode" {
 
 variable "deployment_repo" {
   description = "The URL of the deployment repo"
-  default     = "https://github.com/Allwyn-UK/ss-tf-infra"
   type        = string
 }
 
