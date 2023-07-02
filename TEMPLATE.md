@@ -77,6 +77,17 @@ The following variables are mandatory
 
 ## Pre-Commit Hooks
 
+Use Pre-Commit - see pre-commit-config.yaml
+
+    check for added large files..............................................Passed
+    check for merge conflicts................................................Passed
+    fix end of files.........................................................Passed
+    trim trailing whitespace.................................................Passed
+    check yaml...............................................................Passed
+    check that executables have shebangs.................(no files to check)Skipped
+    Terraform fmt........................................(no files to check)Skipped
+    tflint...............................................(no files to check)Skipped
+    Checkov..............................................(no files to check)Skipped
 
 ## Security
 
