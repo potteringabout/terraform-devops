@@ -87,22 +87,24 @@ runs:
       if: github.event_name == 'pull_request'
       env:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        ENVIRONMENT: ${{ inputs.ENVIRONMENT_NAME }}
       with:
         github-token: ${{ github.token }}
         script: |
-          const output = `#### Terraform Initialization ${{ steps.init.outcome }}
+          const output = `### ${{ env.ENVIRONMENT }} - Terraform Plan
+          #### Terraform Initialization ${{ steps.init.outcome }}
           #### Terraform Validation ${{ steps.validate.outcome }}
           #### Terraform Format and Style ${{ steps.fmt.outcome }}
           #### Terraform Plan ${{ steps.plan.outcome }}
 
-          <details><summary>Plan</summary>
+          <details><summary>${{ env.ENVIRONMENT }} - Plan</summary>
 
           ${{ env.PLAN }}
 
 
           </details>
 
-          *Pushed by: @${{ github.actor }}, Action: ${{ github.event_name }}`;
+          * Triggered by: @${{ github.actor }}, Action: ${{ github.event_name }}`;
 
           github.rest.issues.createComment({
             issue_number: context.issue.number,
