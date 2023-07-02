@@ -12,7 +12,24 @@ permissions:
 
 jobs:
   release:
-    permissions: write-all
+    #permissions: write-all
+
+    #Actions: write
+    #Checks: write
+    #Contents: write
+    #Deployments: write
+    #Discussions: write
+    #Issues: write
+    #Metadata: read
+    #Packages: write
+    #Pages: write
+    #PullRequests: write
+    #RepositoryProjects: write
+    #SecurityEvents: write
+    #Statuses: write
+    permissions:
+      id-token: write
+      contents: write
     name: "release"
     runs-on: ubuntu-latest
 
