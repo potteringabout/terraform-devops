@@ -14,7 +14,6 @@ provider "aws" {
 
   assume_role {
     role_arn = var.deployment_role_arn
-    # role_arn = "arn:aws:iam::680805529666:role/potteringabout-test-github-deployment"
   }
 
   default_tags {
