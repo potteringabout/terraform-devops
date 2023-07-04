@@ -8,10 +8,10 @@ on:
 
 jobs:
   release:
+    name: release
     permissions:
       id-token: write
       contents: write
-    name: "release"
     runs-on: ubuntu-latest
 
     steps:
