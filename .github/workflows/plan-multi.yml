@@ -8,13 +8,6 @@ on:
   pull_request:
     branches: ["main"]
 
-permissions:
-  id-token: write
-  contents: read
-  issues: write
-  pull-requests: write
-  security-events: write
-  deployments: write
 jobs:
   # This workflow contains a single job called "scan"
   scan:
@@ -39,6 +32,12 @@ jobs:
 
   plan:
     name: plan
+    permissions:
+      id-token: write
+      contents: read
+      issues: write
+      pull-requests: write
+      deployments: write
     needs: ["scan"]
     uses: ./.github/workflows/plan.yml
     strategy:
