@@ -9,7 +9,7 @@ jobs:
   tag:
     name: tag
     permissions:
-      id-token: write
+      #id-token: write
       contents: write
       issues: write
       pull-requests: write
