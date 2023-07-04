@@ -11,7 +11,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
-      issues: write
+      #issues: write
       pull-requests: write
       #deployments: write
     runs-on: ubuntu-latest
