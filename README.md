@@ -4,82 +4,50 @@ Sample project for deploying AWS infrastructure using Terraform
 
 https://github.com/Allwyn-UK/plat-tf-template.git
 
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
 
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.5 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
 
-[![GitHub Super-Linter](https://github.com/Allwyn-UK/plat-tf-template/actions/workflows/linter.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
+## Providers
 
-## Repository Structure
+No providers.
 
-### Components
+## Modules
 
-Code is broken down into `components`.  A component is a container for a
-discreet piece of functionality.
-__Should we have components for iam and security groups__
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_mod1"></a> [mod1](#module\_mod1) | ./modules/mod1 | n/a |
+| <a name="module_mod2"></a> [mod2](#module\_mod2) | ./modules/mod2 | n/a |
 
-### Terraform version
+## Resources
 
-Project includes `terraform.yml` file to allow us to control the version of
-terraform used in the deployment.
-Note: we can maybe do this in terragrunt but I think tfswitch provides us with a
-better way to manage this.
+No resources.
 
-## Config vs Code
+## Inputs
 
-Config will be stored in GitHub environments in yaml.
-We will have the ability to pass in on the command-line for deployments to dev.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_account"></a> [account](#input\_account) | Account name abbreviation | `string` | `"prod"` | no |
+| <a name="input_account_full"></a> [account\_full](#input\_account\_full) | Account name | `string` | `"Production Account"` | no |
+| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | n/a | `string` | `"eu-west-2"` | no |
+| <a name="input_colour"></a> [colour](#input\_colour) | The name of your favourite colour | `string` | `"blue"` | no |
+| <a name="input_costcentre"></a> [costcentre](#input\_costcentre) | The cost centre to charge the asset to | `string` | `"123"` | no |
+| <a name="input_deployment_mode"></a> [deployment\_mode](#input\_deployment\_mode) | How the resource was deployed | `string` | `"auto"` | no |
+| <a name="input_deployment_repo"></a> [deployment\_repo](#input\_deployment\_repo) | The URL of the deployment repo | `string` | n/a | yes |
+| <a name="input_deployment_role_arn"></a> [deployment\_role\_arn](#input\_deployment\_role\_arn) | The ARN of role the AWS provider should assume | `string` | `""` | no |
+| <a name="input_email"></a> [email](#input\_email) | Email contact for the asset owner | `string` | `"platformengineering@allwyn.co.uk"` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | Environment name abbreviation in lower case | `string` | `"prod"` | no |
+| <a name="input_environment_full"></a> [environment\_full](#input\_environment\_full) | The environment name in full | `string` | `"Production environment for shared services"` | no |
+| <a name="input_food"></a> [food](#input\_food) | The name of your favourite food | `string` | `"pizza"` | no |
+| <a name="input_owner"></a> [owner](#input\_owner) | The individual or team owner of the asset | `string` | `"Platform Engineering"` | no |
+| <a name="input_project"></a> [project](#input\_project) | Project abbreviation in lower case | `string` | `"ss"` | no |
+| <a name="input_project_full"></a> [project\_full](#input\_project\_full) | The project name in full | `string` | `"Shared Services"` | no |
 
-eg.
+## Outputs
 
-    accountid: 123456789012
-    tags:
-      project: web
-      account: dev
-      environment: dev01
-      owner: dave
-      email: dave@test.com
-
-## Shared actions / re-usable workflows
-
-This repository contains local GitHub actions.  These will be centralised/shared
-going forward.
-
-### Dev vs Test/Prod Deployments
-
-How do we provide command-line access to deploy to dev?
-
-## Notes
-
-### Finding the GitHub Repository ID
-
-Can be found with script
-
-    #!/bin/bash
-    OWNER='your github username or organization name'
-    REPO_NAME='your repository name'
-    echo $(gh api -H "Accept: application/vnd.github+json" repos/$OWNER/$REPO_NAME) | jq .id
-
-### GitHub OIDC subject
-
-The OIDC subject passed to AWS by default contains the repository name and the context.
-That might be
-
-    repo: xxxx
-    environment: dev01 - the GitHub environment.
-
-We can customise at the repository level or org level what we gets passed in the token.
-
-To see what gets passed...
-
-    gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /repositories/REPOSITORY_ID/environments/ENVIRONMENT/secrets
-
-    gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /repositories/625481833/environments/prod/secrets
-
-We need to use curl ( or something similar ) to update the subject.
-
-    curl -L \
-      -X PUT \
-      -H "Accept: application/vnd.github+json" \
-      -H "Authorization: Bearer <YOUR-TOKEN>"\
-      -H "X-GitHub-Api-Version: 2022-11-28" \
-      https://api.github.com/repos/<org>/<repo>/actions/oidc/customization/sub \
-      -d '{"use_default":false,"include_claim_keys":["repo","context", "repository_visibility", "ref", "ref_type" ]}'
+No outputs.
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

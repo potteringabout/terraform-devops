@@ -2,33 +2,20 @@
 
 ## CodeSpaces
 
+Developers can interact with this respository using GitHub CodeSpaces.  The
+CodeSpace image provides the following software.
+
 - python:  3.11.4
+- boto3:  1.26.160
 - docker:  24.0.2
 - gh:  2.31.0
 - terraform:  1.5.2
 - tflint:  0.47.0
 - checkov:  2.3.309
-- boto3:  1.26.160
 - ssm-tools:  1.6.0
 - tfswitch:  0.13.1308
 
 ## Structure
-
-## Actions
-
-### Push to branch
-
-### PR to main
-
-### Push to main
-
-#### Adhoc actions
-
-#### Plan
-
-#### Deploy
-
-#### Checkov
 
 ## Variables
 
@@ -39,6 +26,12 @@
 |ENVIRONMENTS|Array of environment names.  These should match the environments defined in GitHub Environments|["dev01","test01","test02","prod01"]|
 |TF_VERSION|Version of terraform used for the deployment|1.5.2|
 
+### Environment level secrets
+
+|Name|Description|Example|
+|---|---|---|
+|IDENTITY_ROLE|The role to be assumed in the identity account|dfe-dev-github|
+
 ### Environment level variables
 
 |Name|Description|Example|
@@ -46,11 +39,6 @@
 |TF_DYNAMO_TABLE|Terraform dynamo table for this account/environment||
 |TF_STATE_BUCKET|Terraform state bucket for this account/environment||
 |CONFIG|A json object all variables required for the environment deployment ( See below )||
-
-### Environment level secrets
-|Name|Description|Example|
-|---|---|---|
-|IDENTITY_ROLE|The role to be assumed in the identity account|dfe-dev-github|
 
 #### CONFIG object
 
@@ -73,7 +61,21 @@ The following variables are mandatory
       "project_full": "<project full name>"                         # Eg. Digital Front End
     }
 
+## CI/CD - GitHub Actions
 
+### Push to branch
+
+### PR to main
+
+### Push to main
+
+## Adhoc actions
+
+### Plan
+
+### Deploy
+
+#### Checkov
 
 ## Pre-Commit Hooks
 
@@ -91,7 +93,7 @@ Use Pre-Commit - see pre-commit-config.yaml
 
 ## Security
 
-### Main branch
+### Main branch
 
 * Branch protection on main
 * Require PR with approval before merging
@@ -108,7 +110,6 @@ Use Pre-Commit - see pre-commit-config.yaml
 * Deployment protection rules for environments ( Only for prod and prelive? )
 
 ### CODEOWNERS
-
 
 #### OIDC
 
