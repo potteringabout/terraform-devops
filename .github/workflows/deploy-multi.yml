@@ -6,21 +6,21 @@ on:
       - main
 
 jobs:
-  release:
-    name: release
+  tag:
+    name: tag
     permissions:
       id-token: write
       contents: write
-      #issues: write
+      issues: write
       pull-requests: write
-      #deployments: write
+      deployments: write
       actions: read
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-        #with:
-        #  fetch-depth: 0
+        with:
+          fetch-depth: 0
 
       - name: Tag of main branch
         uses: ./.github/actions/release
@@ -32,7 +32,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    needs: ["release"]
+    needs: ["tag"]
     uses: ./.github/workflows/deploy.yml
     strategy:
       fail-fast: false
