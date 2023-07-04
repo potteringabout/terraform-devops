@@ -6,14 +6,33 @@ on:
       - "main"
 
 jobs:
+  release:
+    name: release
+    permissions:
+      id-token: write
+      contents: write
+      #issues: write
+      pull-requests: write
+      #deployments: write
+      actions: read
+    runs-on: ubuntu-latest
 
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      #- name: Tag of main branch
+      #  uses: ./.github/actions/release
+      #  with:
+      #    MESSAGE: 'PR #${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}'
 
   deploy:
     name: deploy
     permissions:
       id-token: write
       contents: read
-    #needs: ["release"]
+    needs: ["release"]
     uses: ./.github/workflows/deploy.yml
     strategy:
       fail-fast: false
