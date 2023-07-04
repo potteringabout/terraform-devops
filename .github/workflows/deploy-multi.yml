@@ -22,10 +22,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      #- name: Tag of main branch
-      #  uses: ./.github/actions/release
-      #  with:
-      #    MESSAGE: 'PR #${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}'
+      - name: Tag of main branch
+        uses: ./.github/actions/release
+        with:
+          MESSAGE: 'PR #${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}'
 
   deploy:
     name: deploy
