@@ -3,6 +3,10 @@ run-name: Scheduled Checkov
 on:
   schedule:
     - cron: "0 2 * * *"
+  push:
+    branches:
+      - "**"
+      - "!main"
 
 permissions:
   id-token: write
