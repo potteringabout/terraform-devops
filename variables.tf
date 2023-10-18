@@ -91,6 +91,6 @@ variable "food" {
 
 variable "config" {
   description = "The config object"
-  type = map()
+  type = object({})
   default = {}
 }
