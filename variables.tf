@@ -89,8 +89,8 @@ variable "food" {
   type        = string
 }
 
-variable "config" {
-  description = "The config object"
+variable "s3" {
+  description = "s3 details"
   type        = object({})
   default     = {}
 }
