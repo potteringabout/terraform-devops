@@ -14,6 +14,12 @@ resource "aws_s3_bucket_versioning" "bucket_versioning" {
 }
 
 
+variable "rep_rules" {
+  type    = list(string)
+  default = ["/p1", "/p2"]
+}
+
+
 
 resource "aws_s3_bucket_replication_configuration" "replication" {
   # Must have bucket versioning enabled first
@@ -22,11 +28,13 @@ resource "aws_s3_bucket_replication_configuration" "replication" {
   role   = aws_iam_role.replication.arn
   bucket = aws_s3_bucket.source.id
 
+  for_each = toset(var.rep_rules)
+
   rule {
-    id = "foobar"
+    id = each.value
 
     filter {
-      prefix = "foo"
+      prefix = each.value
     }
 
     status = "Enabled"
