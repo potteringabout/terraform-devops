@@ -16,7 +16,16 @@ resource "aws_s3_bucket_versioning" "bucket_versioning" {
 
 variable "rep_rules" {
   type    = list(string)
-  default = ["/p1", "/p2"]
+  default = [
+    {
+      "id": "tab1",
+      "path": "/baba"
+    },
+    {
+      "id": "tab2",
+      "path": "/xxx"
+    }
+  ]
 }
 
 
@@ -28,20 +37,23 @@ resource "aws_s3_bucket_replication_configuration" "replication" {
   role   = aws_iam_role.replication.arn
   bucket = aws_s3_bucket.source.id
 
-  for_each = toset(var.rep_rules)
+  dynamic "rule" {
 
-  rule {
-    id = each.value
+    for_each = var.rep_rules
+    content {
+      id = setting.value["id"]
 
-    filter {
-      prefix = each.value
-    }
+      filter {
+        prefix = setting.value["path"]
+      }
+      status = "Enabled"
 
-    status = "Enabled"
+      destination {
+        bucket        = aws_s3_bucket.destination.arn
+        storage_class = "STANDARD"
+      }
+    }  
 
-    destination {
-      bucket        = aws_s3_bucket.destination.arn
-      storage_class = "STANDARD"
-    }
   }
+
 }
