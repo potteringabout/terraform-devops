@@ -88,3 +88,9 @@ variable "food" {
   default     = "pizza"
   type        = string
 }
+
+variable "config" {
+  description = "The config object"
+  type = map()
+  default = {}
+}

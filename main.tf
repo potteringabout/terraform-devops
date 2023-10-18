@@ -9,3 +9,8 @@ module "mod2" {
   my_favourite_key   = "/${var.project}/${var.environment}/colour"
   my_favourite_value = var.colour
 }
+
+module "s3" {
+  source      = "./modules/s3"
+  bucket_name = var.config["s3"]["bucket_name"]
+}
