@@ -89,6 +89,6 @@ variable "food" {
 
 variable "s3" {
   description = "s3 details"
-  type        = map(string, object)
+  type        = map(string)
   default     = {}
 }
