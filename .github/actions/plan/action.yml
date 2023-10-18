@@ -26,6 +26,9 @@ inputs:
   IDENTITY_ROLE:
     description: "Role for Aws"
     required: true
+  CONFIG:
+    description: "TF variables from GH environment"
+    required: true
 
 outputs:
   PLAN_RESULT:
@@ -68,6 +71,14 @@ runs:
       run: terraform validate
       shell: bash
 
+    - name: Get TF Vars
+      id: get_vars
+      run: |
+        mkdir -p variables
+        printf '${{ inputs.CONFIG }}' > ./variables/input.tfvars.json
+        cat ./variables/input.tfvars.json
+      shell: bash
+    
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       id: fmt
