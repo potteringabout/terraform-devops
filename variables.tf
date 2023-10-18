@@ -79,18 +79,16 @@ variable "project_full" {
 // Application Variables
 variable "colour" {
   description = "The name of your favourite colour"
-  default     = "blue"
   type        = string
 }
 
 variable "food" {
   description = "The name of your favourite food"
-  default     = "pizza"
   type        = string
 }
 
 variable "s3" {
   description = "s3 details"
-  type        = object({})
+  type        = map(string, object)
   default     = {}
 }
